@@ -1,0 +1,319 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="__CSS__/city-picker.css">
+<style>
+.btn-success {
+    margin-top: 12px;
+}
+.city-picker-span {
+    width: 200px !important;
+}
+.city-select-content {
+    width: auto !important;
+}
+</style>
+<div class="container">
+<div class="inner clearfix"> <include file="Public:left" />
+  <div class="content-right fl">
+    <h1 class="content-right-title">管理及权限-管理员</h1>
+    <form action="" method="post">
+      <div class="clearfix"> <a href="javascript:;" class="btn btn-success fl BtnAddClass">添加管理员</a> </div>
+    </form>
+    <table class="wxtables mgt15">
+      <colgroup>
+      <col width="5%">
+      <col width="10%">
+      <col width="10%">
+      <col width="15%">
+      <col width="15%">
+      <col width="10%">
+      <col width="15%">
+      <col width="20%">
+      </colgroup>
+      <thead>
+        <tr align="center">
+          <td>序号</td>
+          <td>登陆账号</td>
+          <td>所属群组</td>
+          <td>最后登录时间</td>
+          <td>地区</td>
+          <td>状态</td>
+          <td>添加时间</td>
+          <td class="center">操作</td>
+        </tr>
+      </thead>
+      <tbody>
+        <foreach name="cache"  item="vo" key="k" >
+          <tr align="center">
+            <td>{$k+1}</td>
+            <td>{$vo.username}</td>
+            <td>{$vo.per_name}</td>
+            <td><notempty name="vo['last_login']">{$vo.last_login|date="Y-m-d H:i:s",###}
+                <else/>
+                暂无登录</notempty></td>
+            <td>{$vo.province}-{$vo.city}-{$vo.district}</td>
+            <td style="color:red"><eq name="vo.is_open" value="0" ><span class="red">已禁用</span></eq>
+              <eq name="vo.is_open" value="1"><span class="green">启用中</span></eq></td>
+            <td>{$vo.add_time|date="Y-m-d H:i:s",###}</td>
+            <td>
+              <a href="javascript:;" class="btn btn-primary j-editClass" title="编辑" data-id="{$vo.id}" data-title="{$vo.username}" data-cate="{$vo.cate}" data-province="{$vo.province}" data-city="{$vo.city}" data-district="{$vo.district}">编辑</a> 
+              <gt name="vo['id']" value="1"><a href="jsvascript:;" class="btn btn-warning j-delClass" title="删除" data-id="{$vo.id}">删除</a>
+              <eq name="vo.is_open" value="1" ><a href="javascript:;" class="btn btn-warning j-able" data-able="enable" title="禁用" data-id="{$vo.id}">禁用</a></eq>
+              <neq name="vo.is_open" value="1"><a href="javascript:;" class="btn btn-warning j-able" data-able="able" title="启用" data-id="{$vo.id}">启用</a></neq></gt></td>
+          </tr>
+        </foreach>
+      </tbody>
+    </table>
+    <!-- end wxtables -->
+    <div class="tables-btmctrl clearfix">
+      <div class="fl"> 
+        <!--                    <a href="javascript:;" class="btn btn-primary btn_table_selectAll">全选</a>
+                    <a href="javascript:;" class="btn btn-primary btn_table_Cancle">取消</a>--> 
+        <!--<a href="javascript;" class="btn btn-primary btn_table_delAll">批量删除</a></div>-->
+        <div class="fr"> 
+          <!--<div class="paginate">-->
+          
+          <div class="pages"> {$page} 
+            <!--</div>--> 
+          </div>
+          <!-- end paginate --> 
+        </div>
+      </div>
+      <!-- end tables-btmctrl --> 
+    </div>
+    <!-- end content-right --> 
+  </div>
+</div>
+<!-- end container --> 
+<include file="Public:foot"/>
+<div id="albums-overlay" class="disshow"></div>
+<div class="jbox addfenlei disshow" style="height:auto; overflow: visible;">
+  <div class="jbox-title">
+    <div class="jbox-title-txt">添加账号</div>
+    <a href="javascript:;" class="jbox-close cancle"></a></div>
+  <div class="jbox-container" style="height: 140px;overflow: visible;">
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>登陆账号：</label>
+      <div class="form-controls">
+        <input type="text" class="input username" name="username" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" >
+        <span class="fi-help-text"></span> </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>登陆密码：</label>
+      <div class="form-controls">
+        <input type="password" class="input password" name="password" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" >
+        <span class="fi-help-text"></span> </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>所属地区：</label>
+      <div class="form-controls" style="position: relative;width:200px;">
+        <input id="city-picker1" class="form-control city-picker-input" readonly="" type="text" value="{$cache['province']}{$cache['city']}{$cache['district']}" name="country" data-toggle="city-picker">
+        <!-- <input type="text" class="input required" value="{$cache.country}" title="籍贯" name="country" > --> 
+      </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>管理员权限：</label>
+      <div class="form-controls">
+        <select class="select cate" name="cate">
+          <foreach name="cate_list" item="vo" >
+            <option value="{$vo.id}" >{$vo.per_name}</option>
+          </foreach>
+        </select>
+        <span class="fi-help-text"></span> </div>
+    </div>
+  </div>
+  <div class="jbox-buttons">
+  <a href="javascript:void(0);" class="jbox-buttons-ok btn btn-primary" id="addcategory">确定</a>
+  <a href="javascript:void (0);" class="jbox-buttons-ok btn cancle">取消</a></div>
+</div>
+<div class="jbox editfenlei disshow" style="height:auto; overflow: visible;">
+  <div class="jbox-title">
+    <div class="jbox-title-txt">修改账号</div>
+    <a href="javascript:;" class="jbox-close cancle"></a></div>
+  <div class="jbox-container" style="height: 140px;overflow: visible;">
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed"></span>登陆账号：</label>
+      <div class="form-controls">
+        <input type="hidden" class="input sort" name="serial" id="adminid" >
+        <input type="text" class="input username" name="username" id="editclassname" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" >
+        <span class="fi-help-text"></span> </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed"></span>登陆密码：</label>
+      <div class="form-controls">
+        <input type="password" class="input password" name="password" id="editpassword" placeholder="不修改不用填写密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" >
+        <span class="fi-help-text"></span> </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>所属地区：</label>
+      <div class="form-controls" style="position: relative;width:200px;">
+        <input id="city-picker" class="form-control city-picker-input" readonly="" type="text" value="{$cache['country'][0]}/{$cache['country'][1]}/{$cache['country'][2]}" name="country" data-toggle="city-picker">
+        <!-- <input type="text" class="input required" value="{$cache.country}" title="籍贯" name="country" > --> 
+      </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>管理员权限：</label>
+      <div class="form-controls">
+        <select class="select cate" name="cate" id="editcate">
+          <foreach name="cate_list" item="vo" >
+            <option value="{$vo.id}">{$vo.per_name}</option>
+          </foreach>
+        </select>
+        <span class="fi-help-text"></span> </div>
+    </div>
+  </div>
+  <div class="jbox-buttons">
+  <a href="javascript:void(0);" class="jbox-buttons-ok btn btn-primary" id="editcategory">确定</a>
+  <a href="javascript:;" class="jbox-buttons-ok btn cancle">取消</a></div>
+</div>
+<script type="text/javascript" src="__JS__/city-picker.data.js"></script> 
+<script type="text/javascript" src="__JS__/city-picker.js"></script> 
+<script type="text/javascript">
+$(".cancle").click(function(){
+	$(this).parent().parent('.jbox').hide();
+	$('#albums-overlay').hide();
+})
+</script> 
+<!--添加分类--> 
+<script type="text/javascript">
+$("#city-picker").citypicker({
+	province: '{$cache["country"][0]}',
+	city: '{$cache["country"][1]}',
+	district: '{$cache["country"][2]}'
+});
+$(".BtnAddClass").click(function(){
+	$('.addfenlei').show();
+	$('#albums-overlay').show();
+})
+</script> 
+<script type="text/javascript">
+$("#addcategory").click(function(){
+	var username = $('.username').val(); 
+	var password = $('.password').val();
+	var cate = $('.cate').val();
+	var country = $("#city-picker1").val();
+	if (username == '') {
+		$('.username').focus();
+		dialog.showTips("登陆账号不能为空！","warn");  return false;
+	}
+	if (password == '') {
+		$('.password').focus();
+		dialog.showTips("登陆密码不能为空！","warn"); return false;
+	}
+	if(country == ''){
+		dialog.showTips("地区不能为空！","warn"); return false;
+	}
+	var data = {username: username,password: password,cate: cate,country:country};
+	$.ajax({
+		url: "{:U('/Admin/System/addAdmin')}",
+		type: "post",
+		dataType: "json",
+		data: data,
+	}).done(function (g) {
+		if (g.status == 1) {
+			dialog.showTips(g.info,"",1); return false;
+		} else {
+			dialog.showTips(msg,"warn"); return false;
+		}
+	})
+})
+</script> 
+<!--添加分类end--> 
+
+<!--修改分类--> 
+<script type="text/javascript">
+var categoryid;
+$(".j-editClass").click(function(){
+	$('.editfenlei').show();
+	$('#albums-overlay').show();
+	var categoryname=$(this).attr('data-title');
+	var adminid=$(this).attr('data-id');
+	var cate=$(this).attr('data-cate');
+	var province=$(this).attr('data-province');
+	var city=$(this).attr('data-city');
+	var district=$(this).attr('data-district');
+	$('#editclassname').val(categoryname);
+	$('#adminid').val(adminid);
+	$('#city-picker').val(province+"/"+city+"/"+district);
+	$(".city-picker-span .placeholder").html(province+"/"+city+"/"+district);
+	$('.cate').val(cate);
+})
+function setSelectChecked(checkValue){  
+	var select = document.getElementById('editcate');  
+	for(var i=0; i<select.options.length; i++){  
+		if(select.options[i].value == checkValue){  
+			select.options[i].selected = true;  
+			break;  
+		}  
+	}  
+};  
+$("#editcategory").click(function(){
+	var username = $('#editclassname').val();  //分类名称
+	var password = $('#editpassword').val();
+	var cate = $('#editcate').val();           //排序
+	var adminid = $('#adminid').val();           //排序
+	var country = $("#city-picker").val();
+	if (username == '') {
+		dialog.showTips(msg,"warn");	return false;
+	}
+	$.ajax({
+		url: "{:U('/Admin/System/editAdmin')}",
+		type: "post",
+		dataType: "json",
+		data: {
+			username: username,
+			password: password,
+			cate: cate, 
+			id: adminid,
+			country:country
+		}
+	}).done(function (g) {
+		if (g.status == 1) {
+			dialog.showTips(g.info,"",1);	return false;
+		} else {
+			dialog.showTips(msg,"warn");	return false;
+		}
+
+	})
+})
+$('.j-able').click(function(){
+	var id = $(this).attr("data-id");
+	var able = $(this).attr("data-able");
+	$.ajax({
+		url: "{:U('/Admin/System/ableAdmin')}",
+		type: "post",
+		dataType: "json",
+		data: {
+			id: id,
+			able: able
+		}
+	}).done(function (g) {
+		if (g.status == 1) {
+		   dialog.showTips(g.info,"",1);	return false;
+		} else {
+		   dialog.showTips(msg,"warn");	return false;
+		}
+	})
+})
+$('.j-delClass').click(function(){
+	var is_ture = confirm('确定要删除吗？');
+	if(is_ture)
+	{
+		var id = $(this).attr("data-id");
+		$.ajax({
+			url: "{:U('/Admin/System/deladmin')}",
+			type: "post",
+			dataType: "json",
+			data: {
+				id: id
+			}
+		}).done(function (g) {
+			if (g.status == 1) {
+				dialog.showTips(g.info,"",1);	return false;
+			} else {
+				dialog.showTips(msg,"warn");	return false;
+			}
+		})
+	}
+})
+</script> 
+<!--修改分类end-->

@@ -1,0 +1,125 @@
+<include file="Public:head"/>
+<style>
+.img-list-user li.img-list-add {
+	background: #fff;
+	border: 1px dashed #999;
+	color: #999;
+	font: bold 46px/60px"arial";
+	cursor: pointer;
+}
+.img-list-user li {
+	position: relative;
+	float: left;
+	padding: 1px;
+	margin: -3px 10px 10px 0;
+	width: 60px;
+	height: 60px;
+	text-align: center;
+	overflow: hidden;
+}
+.img-list-user li img {
+	width: 60px;
+	height: auto;
+	vertical-align: middle;
+}
+</style>
+
+<div class="container">
+  <div class="inner clearfix">
+    <div class="content-left fl">
+      <dl class="left-menu shop_13 sub_cog">
+        <dt> <i class="icon-menu cog"></i> <span id="shop_13" data-id="13">系统设置</span> </dt>
+        <dd class="subshop_0 active"> <a href="/Admin/System/set">店铺信息</a> </dd>
+        <dd class="subshop_1 "> <a href="/Admin/System/updatepwd">修改密码</a> </dd>
+        <dd class="subshop_8 "> <a href="javascript:void (0)">佣金设置</a> </dd>
+        <dd class="subshop_9 "> <a href="javascript:void (0)">提现设置</a> </dd>
+      </dl>
+    </div>
+    <!-- end content-left -->
+    
+    <div class="content-right fl" style="min-height: 1496px;">
+      <h1 class="content-right-title">店铺信息</h1>
+      <div class="tabs j-tab clearfix mgt10 mgb20"> <a href="javascript:;" class="tabs_a fl active">店铺信息</a> 
+        <!--<a href="javascript:;" class="tabs_a fl">店铺设置</a>--> 
+        <!--<a href="javascript:;" class="tabs_a fl">支付设置</a>--> 
+        <!--<a href="javascript:;" class="tabs_a fl">商品设置</a>--> 
+        <!--<a href="javascript:;" class="tabs_a fl">购物设置</a>--> 
+      </div>
+      <form action="" method="POST" enctype="multipart/form-data">
+        <div class="tabcontent">
+        <!-- 店铺信息 -->
+        <div class="tabitem">
+          <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>店铺名称：</label>
+            <div class="form-controls">
+              <input type="text" class="input" name="title" value="chandler">
+              <span class="fi-help-text"></span> </div>
+          </div>
+          <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>联系人：</label>
+            <div class="form-controls">
+              <input type="text" class="input" name="contact_name" value="qjw">
+              <span class="fi-help-text"></span> </div>
+          </div>
+          <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>联系电话：</label>
+            <div class="form-controls">
+              <input type="text" class="input" name="contact_phone" value="15267142067">
+              <span class="fi-help-text"></span> </div>
+          </div>
+          <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>店铺Logo：</label>
+            <div class="form-controls pdt5 j-imglistPanel">
+              <ul class="img-list clearfix">
+                <li class="img-list-add j-addgoods"><img src="./店铺信息 - 微分销_files/55c300d5902f7.jpg@!w640"></li>
+              </ul>
+              <input type="hidden" name="avatar" class="j-imglist-dataset" value="/2009691/2015-08/55c300d5902f7.jpg@!w640">
+              <span class="fi-help-text"></span> </div>
+          </div>
+          <div class="formitems">
+            <label class="fi-name">店铺简介：</label>
+            <div class="form-controls">
+              <textarea class="textarea small" name="description"></textarea></div>
+          </div>
+          <div class="formitems">
+            <label class="fi-name"><span class="colorRed"></span>版权所有：</label>
+            <div class="form-controls">
+              <input type="text" class="input" name="copy_right" value="">
+              <span class="fi-help-text"></span> </div>
+          </div>
+          <div class="formitems">
+            <label class="fi-name">技术支持：</label>
+            <div class="form-controls" style="height: 36px;line-height: 32px;">
+              <label class="support">
+                <input type="text" class="input" name="support" value="吾诺瀚卓">
+              </label>
+              <label>
+                <input id="show_support1" name="show_support" type="radio" style="vertical-align: middle;margin-top: -3px;" value="1" checked="checked">
+                显示</label>
+              <label>
+                <input id="show_support2" name="show_support" type="radio" style="vertical-align: middle;margin-top: -3px;" value="2">
+                不显示</label>
+              <span class="fi-help-text"></span> </div>
+          </div>
+          
+          <!-- <div class="formitems store" style="display:none">
+                <label class="fi-name">个性化店铺名称：</label>
+                <div class="form-controls">
+                    <input type="text" class="input" name="store_name" value="">
+                    <span class="fi-help-text"></span>
+                </div>
+            </div> --> 
+          
+        </div>
+        <div class="mgl120">
+          <input type="submit" class="btn btn-primary" name="st" value="保存">
+        </div>
+      </form>
+    </div>
+    
+    <!-- end content-right --> 
+  </div>
+</div>
+<!-- end container --> 
+<include file="Public:foot"/>
+<!--gonggao--> 

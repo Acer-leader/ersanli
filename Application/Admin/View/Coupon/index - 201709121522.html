@@ -1,0 +1,176 @@
+<include file="Public:head"/>
+
+<!-- end header -->
+<style>
+.wxtables td .btn {padding: 0px 6px;}
+#J_wx_fans {vertical-align: -2px;margin-top: 5px;}
+.select.mini.new {width: 140px;}
+input.mini.Wdate {width: 100px;}
+.disabled {pointer-events:none;background:#666;border:none;color:#cec9c9;}
+.btn{border:none;}
+</style>
+<script type="text/javascript" src="__JS__/jquery.js"></script>
+<div class="container">
+    <div class="inner clearfix">
+        <include file="Public:left" />
+        <div class="content-right fl">
+            <div> <h1 style="display:inline-block;margin-right:400px;" class="content-right-title">优惠劵列表</h1> </div>
+
+            <div class="alert alert-info disable-del">目前拥有 <span style="font-size:16px;">{$count}</span> 个优惠券。<a
+                    href="javascript:;" class="alert-delete" title="隐藏"><i class="gicon-remove"></i></a></div>
+            <div class="tablesWrap">
+                <div class="tables-searchbox">
+                    <!--div class="fl">
+                        <form action="" method="post">
+                            <input type="text" class="input" name="title" id="title" value="{$title}" placeholder="优惠劵名字">
+                            <select class="select" name="is_status">
+                                <option value="">--请选择状态--</option>
+                                <option value="3" <eq name="is_status" value="3">selected="selected"</eq>>停止</option>
+                                <option value="1" <eq name="is_status" value="1">selected="selected"</eq>>启用</option>
+                                <option value="2" <eq name="is_status" value="2">selected="selected"</eq>>已结束</option>
+                            </select>
+                            <button class="btn btn-primary" id="search_m" style="vertical-align:-2px;"><i class="gicon-search white"></i>查询
+                            </button>
+                        </form>
+                    </div-->
+                    <a href="{:U('/Admin/Coupon/coupon_info')}" class="btn btn-success">新增优惠劵</a>
+                </div>
+                <!-- end tables-searchbox -->
+                <table class="wxtables" style="text-align:center;">
+                    <colgroup>
+                        <!-- <col width="5%"> -->
+                        <col width="%">
+                        <col width="8%">
+                        <col width="6%">
+                        <col width="6%">
+                        <col width="6%">
+                        <col width="15%">
+                        <col width="15%">
+                        <col width="22%">
+                    </colgroup>
+                    <thead width="100%">
+                    <tr>
+                        <!-- <td><i class="icon_check"></i></td> -->
+                        <td>名字</td>
+                        <td>分类</td>
+                        <td>状态</td>
+                        <td>剩余量</td>
+                        <td>总数量</td>
+                        <td>有效起始时间</td>
+                        <td>有效结束时间</td>
+                        <td>操作</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <foreach name="lists" item="list">
+                        <tr>
+                            <!-- <td><input type="checkbox" class="checkbox table-ckbs" data-id="{$vo.id}" data-name=""></td> -->
+                            <td><p>{$list.name}</td>
+                            <!--td><switch name="list.is_type">
+                                <case value="0">折扣劵</case>
+                                <case value="1">定额劵</case>
+                                <case value="2">满减劵</case>
+                            </switch></td-->
+                            <td><p>{$list.classname}</td>
+                            <td class="is_status">
+                                <switch name="list.is_status">
+                                    <case value="0"><p style='color:green;'>停止</p></case>
+                                    <case value="1"><p style='color:red;'>启用</p></case>
+                                    <case value="2"><p style='color:red;'>结束</p></case>
+                                </switch>
+                            </td>
+                            <!--td><notempty name='list.use_end_time'>{$list.use_end_time|date="Y-m-d H:i:s",###}<else/>不限</notempty></td-->
+                            <td><p><?php echo ($list['createnum']-$list['send_num']);?></td>
+                            <td><p>{$list.createnum}</td>
+                            <td>{$list.send_start_time|date="Y-m-d H:i:s",###}</td>
+                            <td>{$list.send_end_time|date="Y-m-d H:i:s",###}</td>
+                            <td><p>
+                                <a href="{:U('/Admin/Coupon/coupon_info/id')}/{$list.id}" class='btn <eq name="list.is_status" value="0">btn-success<else/>disabled</eq> editcoupon' style="float: left;">修改</a>
+                                <a href="{:U('/Admin/Coupon/del_coupon/id')}/{$list.id}" onclick="{if(!confirm('确定删除产品吗?'))return false;} " class='btn j-delClass <eq name="list.is_status" value="0">btn-warning<else/>disabled</eq>' title="删除" data-id="2151938" style="float: left;margin-left:5px;">删除</a>
+                                <a href="{:U('/Admin/Coupon/coupon_list/id')}/{$list.id}" class="btn btn-success" style="float:left;margin-left:5px;">查看分配</a>
+                                 <switch name="list.is_status">
+                                        <case value="0">
+                                            <a href="JavaScript:void(0);" class="btn btn-success changeStatus" title="启用" data-status="{$list.is_status}" data-id="{$list.id}" style="float: left;margin-left: 5px;">启用</a>
+                                        </case>
+                                        <case value="1">
+                                            <a href="JavaScript:void(0);" class="btn btn-danger changeStatus" title="结束" data-status="{$list.is_status}" data-id="{$list.id}" style="float: left;margin-left: 5px;">停止</a>
+                                        </case>
+                                    </switch>
+                                </p>
+                            </td>
+                        </tr>
+                    </foreach>
+                    </tbody>
+                </table>
+                <!-- end wxtables -->
+                <div class="tables-btmctrl clearfix">
+                    <!-- <div class="fl">
+                        <a href="javascript:;" class="btn btn-primary btn_table_selectAll">全选</a>
+                        <a href="javascript:;" class="btn btn-primary btn_table_Cancle">取消</a>
+                    </div> -->
+                    <div class="fl">
+                        <div class="pages" style="width:100%;">
+                            {$page}
+                        </div>
+                        <!-- end paginate -->
+                    </div>
+                </div>
+                <!-- end tables-btmctrl -->
+            </div>
+            <!-- end tablesWrap -->
+
+        </div>
+        <!-- end content-right -->
+    </div>
+</div>
+
+<!-- end container -->
+<script>
+$(function(){
+    $(".cancle").click(function(){
+        $(this).parent().parent('.jbox').hide();
+        $('#albums-overlay').hide();
+    })
+    $(".changeStatus").click(function()
+    {   //是否冻结
+        var id = $(this).attr("data-id");
+        console.log(id);
+        var _this = $(this);
+        $.post("{:U('Admin/Coupon/changeStatus')}",{id:id},function(data){
+            if(data.status == 1){
+                var p = _this.parents('tr').find(".is_status p");
+                p.html(data.title);
+                _this.attr('data-status',data.is_status);
+                if(_this.hasClass("btn-success")){
+                    _this.removeClass("btn-success").addClass("btn-danger").html("停止");
+                    p.css("color","red");
+                    //_this.prev('a').removeClass("btn-warning");
+                   // _this.prev('a').addClass("disabled");
+                    
+                    _this.prev('a').prev('a').removeClass("btn-warning");
+                    _this.prev('a').prev('a').addClass("disabled");
+                    
+                    _this.prev('a').prev('a').prev('a').removeClass("btn-success");
+                   _this.prev('a').prev('a').prev('a').addClass("disabled");
+                }else{
+                    _this.removeClass("btn-danger").addClass("btn-success").html("启用");
+                    p.css("color","green");
+                    //_this.prev('a').removeClass("disabled");
+                    //_this.prev('a').addClass("btn-warning");
+                    
+                   _this.prev('a').prev('a').removeClass("disabled");
+                   _this.prev('a').prev('a').addClass("btn-warning");
+                   
+                   _this.prev('a').prev('a').prev('a').removeClass("disabled");
+                   _this.prev('a').prev('a').prev('a').addClass("btn-success");
+                }
+                //window.location.reload();   //刷新当前页面.
+            }else{
+                alert("修改失败");
+            }
+        },"json")
+    })
+})
+</script>
+
+<include file="Public:foot"/>

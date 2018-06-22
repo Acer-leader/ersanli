@@ -1,0 +1,168 @@
+<include file="Public:head"/>
+<div class="container">
+  <div class="inner clearfix"> <include file="Public:left" />
+    <div class="content-right fl">
+      <h1 class="content-right-title">{$goodsinfo.title}属性列表</h1>
+      <div class="alert alert-info disable-del"> 目前拥有 <span style="font-size:16px;">{$lists|count}</span>个属性。
+        <a href="javascript:;" class="alert-delete" title="隐藏"><i class="gicon-remove"></i></a> </div>
+      <div class="tablesWrap">
+        <div class="tables-searchbox">
+          <div class="fl">
+            <a href="javascript:;" onclick="javascript:history.back(-1);" class="btn">返回</a>
+            <a href="javascript:;" class="btn btn-success BtnAddClass">添加属性</a>
+          </div>
+        </div>
+        <!-- end tables-searchbox -->
+        <table class="wxtables" style="text-align:center;">
+          <colgroup>
+          <col width="6%">
+          <col width="10%">
+          <col width="10%">
+          <col width="14%">
+          <col width="15%">
+          </colgroup>
+          <thead>
+            <tr>
+              <td>ID</td>
+              <td>属性</td>
+              <td>值</td>
+              <td>创建时间</td>
+              <td>操作</td>
+            </tr>
+          </thead>
+          <tbody>
+            <foreach name="lists" item="vo">
+              <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.title}</td>
+                <td>{$vo.value}</td>
+                <td>{$vo.create_at}</td>
+                <td>
+                    <a href="JavaScript:void(0);" class='btn J-editInfo btn-success' data-info='{$vo.info}' title="编辑">编辑</a>
+                    <a href="JavaScript:void(0);" class='btn j-delClass btn-warning' data-id="{$vo.id}">删除</a>
+                </td>
+              </tr>
+            </foreach>
+          </tbody>
+        </table>
+        <!-- end wxtables -->
+        <!-- end tables-btmctrl -->
+      </div>
+      <!-- end tablesWrap -->
+    </div>
+    <!-- end content-right -->
+  </div>
+</div>
+<include file="Public:foot"/>
+<div id="albums-overlay" class="disshow"></div>
+<div class="jbox addfenlei disshow" style="height:auto;">
+  <div class="jbox-title">
+    <div class="jbox-title-txt">添加属性</div>
+    <a href="javascript:;" class="jbox-close cancle"></a></div>
+  <div class="jbox-container" style="height: auto;">
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed"></span>属性名：</label>
+      <div class="form-controls">
+        <label>
+          <input type="text" class="input" name="title" value="" placeholder="10个字以内">
+          <span class="red">*必填</span> </label>
+        <span class="fi-help-text"></span> </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed"></span>属性值：</label>
+      <div class="form-controls">
+        <label>
+          <input type="text" class="input" name="value" value="" placeholder="50个字以内">
+          <span class="red">*必填</span> </label>
+        <span class="fi-help-text"></span> </div>
+    </div>
+  </div>
+  <div class="jbox-buttons">
+  <a href="javascript:void(0);" class="jbox-buttons-ok btn btn-primary" id="examine">确定</a>
+  <a href="javascript:void(0);" class="jbox-buttons-ok btn cancle">取消</a></div>
+</div>
+<script type="text/javascript" src="__JS__/jquery-form.js"></script>
+<script type="text/javascript">
+$(".cancle").click(function(){
+    $(this).parent().parent('.jbox').hide();
+    $('#albums-overlay').hide();
+    window.location.reload();
+})
+</script>
+<!--添加分类-->
+<script type="text/javascript">
+var id=0;
+$(".BtnAddClass").click(function(){
+    $('.addfenlei').show();
+    $('#albums-overlay').show();
+})
+<!--添加部分-->
+<!--修改部分-->
+$(".J-editInfo").click(function(){
+    var info = JSON.parse($.trim($(this).attr("data-info")));
+    if(info.id < 1){
+        dialog.showTips('错误的编辑','warn');return false;
+    }
+    id = info.id;
+    $(".jbox-title-txt").html('修改属性');
+    $(".addfenlei input[name=title]").val(info.title);
+    $(".addfenlei input[name=value]").val(info.value)
+    $('.addfenlei').show();
+    $('#albums-overlay').show();
+})
+<!--修改部分-->
+$("#examine").click(function(){
+    var title = $.trim($(".addfenlei input[name=title]").val());
+    var value = $.trim($(".addfenlei input[name=value]").val());
+    if(!title){
+        dialog.showTips('请填写属性名称','warn');return false;
+    }else if(title.length>10){
+        dialog.showTips('属性名称10个字以内','warn');return false;
+    }
+    if(!value){
+        dialog.showTips('请填写属性值','warn');return false;
+    }else if(value.length>50){
+        dialog.showTips('属性值50个字以内','warn');return false;
+    }
+    var goodsid  = "{$goodsid}";
+    var data = {action:'addEdit',goodsid:goodsid,id:id,title:title,value:value}
+    console.log(data);
+    $.post("{:U('Admin/Pointsmall/attributeAddEditDel')}",data,function(g){
+        if(g.status==1){
+            dialog.showTips(g.info,'',1);return false;
+        }else{
+            dialog.showTips(g.info,'warn');return false;
+        }
+    },"json");
+})
+</script>
+<!--添加分类end-->
+<!--修改状态-->
+<!--删除分类 1-->
+<script>
+$(".j-delClass").click(function(){   //是否开始结束
+    var id = $(this).attr("data-id");
+    if(id > 0){
+        if(confirm('确定要删除吗？')){
+            $.ajax({
+                url: "{:U('Admin/Pointsmall/attributeAddEditDel')}",
+                type: "post",
+                dataType: "json",
+                data: {
+                    action:'Del',
+                    id: id,
+                }
+            }).done(function (res) {
+                if (res.status == 1) {
+                    dialog.showTips(res.info,"",1); return false;
+                } else {
+                    dialog.showTips(res.info,"warn"); return false;
+                }
+            })
+        }
+    }else{
+        dialog.showTips('错误的请求','warn');return false;
+    }
+});
+</script>
+<!--删除分类 2-->

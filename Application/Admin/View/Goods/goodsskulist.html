@@ -1,0 +1,276 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="__CSS__//lists.css">
+<style>
+  .imgnav{
+    max-height: 30px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .imgwrapper{
+    display: block;
+    width: 78px;
+    height: 78px;
+    overflow: hidden;
+  }
+  .imgwrapper img{
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border:0;
+  }
+  .spanpd10{
+    margin:10px;
+  }
+  .wxtables.wxtables-sku.newtable{
+    width: 40%;
+    margin: 0;
+  }
+  .img-list li{
+    width: 60px;
+    height:60px;
+  }
+  .cst_h3 span{font-weight: normal;}
+  #imgdiv img{ max-width:190px; max-height:190px; display:none; margin:5px;}
+  .btnimage{width:80px; height:30px; background:white; border:1px solid #d9d9d9;cursor:pointer; position:relative; text-align:center; line-height:31px;}
+  .file{ position:absolute; top:0px; left:0; width:80px; height:30px; background:white; border:1px solid #d9d9d9;cursor:pointer; opacity:0}
+  #imgdiv2 img{ max-width:88px; max-height:88px; display:none; margin:5px;}
+  #xuanze2{ width:60px; height:30px; background:white; border:1px solid #d9d9d9; }
+  #xuanze2:hover{ background:#E6E6E6; }
+  .huase{display:none; width:86px; height:30px; margin:5px; text-indent:5px;}
+
+  </style>
+<div class="container">
+<div class="inner clearfix"> <include file="Public:left"/>
+  <!-- end content-left -->
+    <div class="content-right fl">
+        <div class="panel-single panel-single-light mgt20 j-showinhyd" style="display: block;">
+          <h3 class="cst_h3 mgb20">{$goods_name} sku设置</h3>
+
+          <div class="formitems">
+            <div class="form-controls" style="margin-left:0px;">
+              <a href="{:U('/Admin/Goods/goodssku')}" class="btn btn-success" title="修改商品sku">添加商品sku属性</a>
+              <input class="btn btn-primary sku-btn" type="button" value="选择sku属性">
+              <input class="btn btn-success sku-make" type="button" value="生成sku">
+              <input class="btn btn-success sku-save" type="button" value="保存sku">
+              <!-- <input class="btn btn-success" type="button" value="修改图片" href="{:U('Admin/Goods/skuList')}"> -->
+
+            <div class='add_div'>
+            已选择的sku：<div class="sku-list"></div>
+            </div>
+            <div class='add_div'>
+              <div class="sku_select">
+              </div>
+            </div>
+          <!--   <div class='add_div'>
+              <div class="sku_select_input">
+                库存<input type="text" class="input" name="store">
+                市场价<input type="text" class="input" name="oprice">
+                积分价<input type="text" class="input" name="integral">
+                <button class="btn apply">应用</button>
+              </div>
+            </div> -->
+            <div>
+              <table class="wxtables mgt10 sku-table" style="text-align: center;">
+                {$table}
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="panel-single panel-single-light mgt20 txtCenter"> <a href="##" onclick="window.history.back()" class="btn">返回</a>
+        </div>
+    </div>
+    <!-- end content-right --> 
+  </div>
+</div>
+</div>
+<div id="albums-overlay" style="display: none;"></div>
+<!-- sku -->
+<div class="jbox fenlei sku_box disshow" >
+  <div class="jbox-title">
+    <div class="jbox-title-txt">请选择sku属性</div>
+    <a href="javascript:void(0);" class="jbox-close cancle"></a></div>
+  <div class="jbox-container" style="height: 75px;">
+    <div class="sku-items-list formitems">
+        <foreach name="skulist" item="v">
+          <a class="btn btn-primary sku-item" style="margin:3px;" data-id="{$v['id']}">{$v['classname']}</a>
+        </foreach>
+    </div>
+  </div>
+  <div class="jbox-buttons"> <a href="javascript:void(0);" class="jbox-buttons-ok btn cancle btn-primary">确定</a> <!-- <a href="javascript:void(0);" class="jbox-buttons-ok btn cancle">取消</a> --> </div>
+</div>
+<!-- end container -->
+<include file="Public:foot"/>
+<script type="text/javascript" src="__JS__/jquery-form.js"></script>
+<script>
+   $(".cancle").click(function(){
+      $(this).parent().parent('.jbox').hide();
+      $('#albums-overlay').hide();
+  })
+  // var sku = {$sku};
+  var select_sku = [];
+  $(".sku-btn").click(function (){
+    $(".sku_box").show();
+    $("#albums-overlay").show();
+  })
+  $(".sku-item").click(function (){
+    var id = $(this).attr("data-id");
+  //alert(select_sku);
+    if($(this).hasClass("sku-selected")){
+      $(this).removeClass("sku-selected");
+      $(this).appendTo($(".sku-items-list"))
+      select_sku = array_del(select_sku,id);
+      return false;
+    }
+    $(this).addClass("sku-selected");
+    $(".sku-list").append($(this));
+    select_sku.push(id);
+  //alert(select_sku);
+  })
+  $(".sku-make").click(function (){
+    if(select_sku.length==0){
+      alert("请先选择sku！");return false;
+    }
+    $.post("{:U('Admin/Goods/makeSkuTable')}", {ids:select_sku, goods_id:"{$id}"}, function (data){
+      console.log(data.html);
+      $(".sku-table").html(data.html);
+    },"json");
+  });
+
+
+  $(".sku-table").on('click','.file',function (){
+    if ($(this).parent().prop('className') == 'btnimage fl') {
+      $imgclass=$(this).attr('img');
+      $(this).wrap("<form id='myupload1' action='{:U('/Admin/Index/addImage')}' method='post' enctype='multipart/form-data'></form>"); 
+       upload($imgclass,$(this));
+      }else{
+        $(this).wrap("<div class='btnimage fl'></div>");
+      }
+ 
+     
+  });
+ 
+ var upload   = function(imgclass,aa){
+    // var percent = $('.xuanze_percent'); 
+    // var progress = $('.xuanze_percent');
+
+     aa.change(function(){ //选择文件 
+      $("#myupload1").ajaxSubmit({ 
+        dataType:  'json', //数据格式为json 
+        beforeSend: function() { //开始上传 
+          // progress.show(); //显示进度条
+          // var percentVal = '0%';
+          // percent.html(percentVal); 
+        }, 
+        uploadProgress: function(event, position, total, percentComplete) { 
+          // var percentVal = percentComplete + '%'; //获得进度 
+          // percent.html(percentVal); //显示上传进度百分比 
+        }, 
+        success: function(data) { //成功 
+
+          var img =data[0]["savepath"].substr(1)+data[0]["savename"];
+          $('.'+imgclass+'').attr('src',img);
+          // aa.unwrap();
+          $("#myupload1").remove();
+          $("#"+$imgclass+"").append("<input type='file'  accept='image/jpg,image/jpeg,image/png' img='"+$imgclass+"' name='imagefile' class='file' >");
+          return false;
+        }, 
+        error:function(xhr){ //上传失败 
+          console.log(xhr.status)
+          // aa.unwrap();
+          $("#myupload1").remove();
+          $("#"+$imgclass+"").append("<input type='file'  accept='image/jpg,image/jpeg,image/png' img='"+$imgclass+"' name='imagefile' class='file' >");
+          return false;
+        } 
+      }); 
+    }); 
+ }                 
+
+
+  
+  $(".sku-save").click(function (){
+    var data = {};
+    data['goods_id'] = "{$id}";
+    $(".sku-table tr:gt(0)").each(function(i){
+      var tmp = {};
+      var ids = "-";
+
+      $(this).find(".sku-attr-data").each(function (i){
+        ids+=$(this).attr("data-id")+"-";
+      });
+      var store  = $(this).find("[name='store']").val();
+      var price = $(this).find("[name='price']").val();
+      var image = $(this).find("[name='image']").attr('src');
+      if(ids && store && price){
+        tmp['ids']    = ids;
+        tmp['store']  = $(this).find("[name='store']").val();
+        tmp['price'] = $(this).find("[name='price']").val();
+        tmp['image'] = $(this).find("[name='image']").attr('src');
+        data[i] = tmp;
+      }
+    });
+   
+    $.post("{:U('Admin/Goods/addGoodsSkuAttr')}", data, function (res){
+
+      if(res.status == 1){
+        window.location.reload();
+      }
+    }, "json")
+  })
+
+  function array_del(arr, id){
+    var new_arr = [];
+    var len = arr.length;
+    for(var i=0;i<len;i++){
+      if(arr[i]==id)continue;
+      new_arr.push(arr[i]);
+    }
+    return new_arr;
+  }
+
+  // function makeSelect(arr){
+  //   for(var i in arr){
+  //     var select = $("<select></select>");
+  //     var option = $("<option value=''>--请选择--</option>");
+  //     select.append(option);
+  //     for(var j in arr[i]){
+  //       console.log(arr[i][j]);
+  //       option = $("<option></option>");
+  //       option.val(arr[i][j]['id']);
+  //       option.html(arr[i][j]['classname']);
+  //       select.append(option);
+  //     }
+  //     $(".sku_select").append(select);
+  //   }
+  // }
+
+  $(".apply").click(function (){
+    var store  = $(".sku_select_input input[name=store]").val();
+    var oprice = $(".sku_select_input input[name=oprice]").val();
+    var integral  = $(".sku_select_input input[name=integral]").val();
+    var objs = selectedObj();
+    if(store){
+      objs.find("input[name=store]").val(store);
+    }
+    if(oprice){
+      objs.find("input[name=oprice]").val(oprice);
+    }
+    if(integral){
+      objs.find("input[name=integral]").val(integral);
+    }
+  })
+
+  function selectedObj(){
+    var select = $(".sku_select select");
+    var alltr  = $(".sku-table tr");
+    for(var i=0;i<select.length;i++){
+      var id = select.eq(i).val();
+      if(id){
+        alltr = alltr.find("td[data-id="+id+"]").parent();
+      }
+    }
+    return alltr
+  }
+</script>
+
+</script>

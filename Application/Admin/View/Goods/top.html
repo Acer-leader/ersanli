@@ -1,0 +1,174 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="__CSS__//lists.css">
+
+<div class="container">
+<div class="inner clearfix"> <include file="Public:left"/>
+  <!-- end content-left -->
+
+  <div class="content-right fl">
+    <h1 class="content-right-title">产品列表</h1>
+    <a href="{:U('/Admin/Goods/addgoods')}" class="btn btn-success">发布产品</a>
+    <form action="{:U('/Admin/Pointsmall/Goods/issale')}/{$issale}" method="post">
+      <div class="tables-searchbox newcearchbox">
+        <input type="text" placeholder="产品名称" class="input" name="title" value="{$title}" >
+        <button class="btn btn-primary" style="line-height:26px;"> <i class="gicon-search white"></i>查询 </button>
+      </div>
+    </form>
+    <!-- end tabs -->
+
+    <table class="wxtables mgt10" style="text-align:center;">
+      <colgroup>
+      <col width="2%">
+      <col width="5%">
+      <col width="10%">
+      <col width="10%">
+      <col width="5%">
+      <col width="5%">
+      <col width="5%">
+      <col width="5%">
+      <col width="15%">
+      </colgroup>
+      <thead>
+        <tr class="po_list">
+          <td><i class="icon_check"></i></td>
+          <td>ID</td>
+          <td>产品名称</td>
+          <td>产品LOGO</td>
+          <td>价格(元)</td>
+          <td>库存(件)</td>
+          <td>排序</td>
+          <td>上架</td>
+          <td>操作</td>
+        </tr>
+      </thead>
+      <tbody>
+        <foreach name="lists" item="vo">
+          <tr>
+            <td><input type="checkbox" class="checkbox table-ckbs" data-id="{$vo['id']}"></td>
+            <td>{$vo.id}</td>
+            <td>{$vo.title}</td>
+            <td><div class="table-item-img"> <img src="{$vo['logo']}" alt=""> </div></td>
+            <td>{$vo.price} </td>
+            <td>{$vo.stock}</td>
+            <td>{$vo.sorts} </td>
+            <td><if condition="($vo.issale eq 1)">是<else/>否</if></td>
+            <td>
+              <a href="##" style="margin-left:5px;" class="btn change-issale <eq name="vo['isend']" value="0">btn-danger<else />btn-success</eq>" data-id="{$vo.id}"  title="上架"><eq name="vo['isend']" value="0">已售罄<else />出售中</eq></a>
+              </td>
+          </tr>
+        </foreach>
+      </tbody>
+    </table>
+    <!-- end wxtables -->
+    <div class="tables-btmctrl clearfix">
+      <div class="fl">
+        <a href="javascript:;" class="btn btn-primary btn_table_selectAll">全选</a>
+        <a href="javascript:;" class="btn btn-primary btn_table_Cancle">取消</a>
+        <a href="javascript:;" class="btn btn-primary btn_table_delAll">删除</a>
+        </div>
+        <div class="" style="padding-left:250px;">
+           <div class="pages"> {$page} </div>
+        </div>
+      <!-- end tables-btmctrl -->
+    </div>
+    
+    <!-- end content-right -->
+  </div>
+</div>
+<!-- end container -->
+<include file="Public:foot"/>
+<script>
+$(".change-status").click(function (){
+  var _this= $(this)
+  var id   = $(this).attr("data-id");
+  var item = $(this).attr("data-item");
+  $.post("{:U('Admin/Pointsmall/changeStatus')}", {id:id,item:item}, function(data){
+    if(data.status == 1){
+      _this.css({color:"#0C0"}).html("√");
+    }else if(data.status == 2){
+      _this.css({color:"#c00"}).html("×");
+    }else{
+      alert(data.info);
+    }
+  }, "json")
+})
+$(".change-all-status").click(function (){
+  if(!confirm("确定改变所有选中产品的状态？")){
+    return false;
+  }
+  var ids = "";
+  var item = $(this).attr("data-item");
+  $(".table-ckbs:checked").each(function(i){
+    ids += $(this).attr("data-id")+"-"
+  })
+  if(!ids){
+    alert("请选择产品！");return false;
+  }
+  $.post("{:U('Admin/Pointsmall/changeAllStatus')}" ,{ids:ids,item:item}, function (data){
+    if(data.status){
+      window.location.reload();
+    }else{
+      alert(data.info);
+    }
+  })
+})
+$(".btn_table_delAll").click(function(){
+  if(!confirm("确定删除所有选中的产品？")){
+    return false;
+  }
+  var ids = "";
+  $(".table-ckbs:checked").each(function(i){
+    ids += $(this).attr("data-id")+"-"
+  })
+  if(!ids){
+    alert("请选择产品！");return false;
+  }
+  $.post("{:U('Admin/goods/delgoods')}" ,{action:'Del',id:ids}, function (data){
+    alert(data.info);
+    if(data.status){
+      window.location.reload();
+    }
+  })
+})
+</script>
+<script>
+//201709131453  Cyonger
+//已售罄  出售中
+$(".change-issale").click(function (){
+  var id   = $(this).attr("data-id");
+  $.post("{:U('Admin/Goods/delgoods')}", {action:'changeIsend',id:id}, function(data){
+    if(data.status){
+      window.location.reload()
+    }else{
+      alert(data.info);
+    }
+  }, "json")
+})
+//上下架E
+//删除S
+$(".j-delClass").click(function(){   //是否开始结束
+    var id = $(this).attr("data-id");
+    if(id > 0){
+        if(confirm('确定要删除吗？')){
+            $.ajax({
+                url: "{:U('Admin/Goods/delgoods')}",
+                type: "post",
+                dataType: "json",
+                data: {
+                    action:'Del',
+                    id: id,
+                }
+            }).done(function (res) {
+                if (res.status == 1) {
+                    dialog.showTips(res.info,"",1); return false;
+                } else {
+                    dialog.showTips(res.info,"warn"); return false;
+                }
+            })
+        }
+    }else{
+        dialog.showTips('错误的请求','warn');return false;
+    }
+});
+//删除E
+</script>

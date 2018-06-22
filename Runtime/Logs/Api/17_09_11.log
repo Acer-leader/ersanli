@@ -1,0 +1,60 @@
+[ 2017-09-11T14:05:59+08:00 ] 183.159.99.138 /Api
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000357s ]
+
+[ 2017-09-11T14:18:51+08:00 ] 183.159.99.138 /Api
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000382s ]
+
+[ 2017-09-11T14:29:51+08:00 ] 183.159.99.138 /Api
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000388s ]
+ERR: Redis server went away
+
+[ 2017-09-11T14:31:07+08:00 ] 183.159.99.138 /Api
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000015s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000477s ]
+ERR: Redis server went away
+
+[ 2017-09-11T14:35:37+08:00 ] 183.159.99.138 /Api
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000347s ]
+
+[ 2017-09-11T14:35:49+08:00 ] 183.159.99.138 /Api/test
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000341s ]
+ERR: 无法加载控制器:Test
+
+[ 2017-09-11T14:35:55+08:00 ] 183.159.99.138 /Api/index/test
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000289s ]
+ERR: Redis server went away
+
+[ 2017-09-11T14:51:06+08:00 ] 183.159.99.138 /Api
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000332s ]
+
+[ 2017-09-11T14:51:08+08:00 ] 183.159.99.138 /Api/index/test
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000332s ]
+ERR: Redis server went away
+
+[ 2017-09-11T15:09:05+08:00 ] 183.159.99.138 /Api
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000015s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000410s ]
+
+[ 2017-09-11T15:23:45+08:00 ] 183.159.99.138 /Api/Index/test
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000332s ]
+

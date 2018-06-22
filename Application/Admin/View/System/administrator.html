@@ -1,0 +1,344 @@
+<include file="Public:head"/>
+<style>
+.btn-success{
+	margin-top:12px;
+}
+</style>
+<div class="container">
+    <div class="inner clearfix">
+    	<div class="content-left fl">
+          <dl class="left-menu shop_13 sub_cog">
+            <dt> <i class="icon-menu cog"></i> <span id="shop_13" data-id="13">系统设置</span> </dt>
+            <dd class="subshop_0 active"> <a href="/Admin/System/administrator">管理及权限</a> </dd>
+            <dd class="subshop_1 "> <a href="/Admin/System/updatepwd">修改密码</a> </dd>
+          </dl>
+        </div>
+        <!-- end content-left -->
+
+        <div class="content-right fl">
+
+
+            <h1 class="content-right-title">管理及权限-管理员</h1>
+
+
+            
+            <form action="" method="post">
+
+
+                <div class="clearfix">
+                    <a href="javascript:;" class="btn btn-success fl BtnAddClass">添加管理员</a>
+
+                    <!--<div class="tables-searchbox fr">
+                        <input type="text" placeholder="分类名称" class="input" name="class_name" value="">
+                        <button class="btn"><i class="gicon-search"></i>查询</button>
+                    </div>-->
+                </div>
+            </form>
+
+            <table class="wxtables mgt15">
+                <colgroup>
+                    <col width="2%">
+                    <col width="23%">
+                    <col width="25%">
+                    <col width="15%">
+                    <col width="35%">
+                </colgroup>
+                <thead>
+                <tr>
+                    <td></td>
+                    <td>登陆账号</td>
+                    <td>管理员权限</td>
+                    <td>状态</td>
+                    <td class="center">操作</td>
+                </tr>
+                </thead>
+                <tbody>
+                <foreach name="user_list"  item="vo" >
+
+                <tr>
+                    <td></td>
+                    <td>{$vo.username}</td>
+                    <td>{$vo.catename}</td>
+                    <td><eq name="vo.is_open" value="0" ><span class="red">已禁用</span></eq><eq name="vo.is_open" value="1"><span class="green">启用中</span></eq></td>
+                    <td class="center">
+                        <a href="javascript:;" class="btn btn-primary j-editClass" title="编辑" data-id="{$vo.id}" data-title="{$vo.username}" data-cate="{$vo.cate}">编辑</a>
+                        <a href="jsvascript:;" class="btn btn-warning j-delClass" title="删除" data-id="{$vo.id}">删除</a>
+                        
+                        <eq name="vo.is_open" value="1" ><a href="javascript:;" class="btn btn-warning j-able" data-able="enable" title="禁用" data-id="{$vo.id}">禁用</a></eq>
+                        <neq name="vo.is_open" value="1"><a href="javascript:;" class="btn btn-warning j-able" data-able="able" title="启用" data-id="{$vo.id}">启用</a></neq>  
+
+                    </td>
+                </tr>
+                </foreach>
+                </tbody>
+            </table>
+            <!-- end wxtables -->
+            <div class="tables-btmctrl clearfix">
+                <div class="fl">
+<!--                    <a href="javascript:;" class="btn btn-primary btn_table_selectAll">全选</a>
+                    <a href="javascript:;" class="btn btn-primary btn_table_Cancle">取消</a>-->
+                    <!--<a href="javascript;" class="btn btn-primary btn_table_delAll">批量删除</a></div>-->
+                <div class="fr">
+                    <!--<div class="paginate">-->
+
+                        <div class="pages">
+                            {$page}
+                        <!--</div>-->
+                    </div>
+                    <!-- end paginate -->
+                </div>
+            </div>
+            <!-- end tables-btmctrl -->
+        </div>
+        <!-- end content-right -->
+    </div>
+</div>
+<!-- end container -->
+<include file="Public:foot"/>
+
+<div id="albums-overlay" class="disshow"></div>
+<div class="jbox addfenlei disshow" style="height:auto;">
+    <div class="jbox-title">
+        <div class="jbox-title-txt">添加分类</div>
+        <a href="javascript:;" class="jbox-close cancle"></a></div>
+    <div class="jbox-container" style="height: 140px;">
+        <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>登陆账号：</label>
+
+            <div class="form-controls">
+                <input type="text" class="input username" name="username" >
+                <span class="fi-help-text"></span>
+            </div>
+        </div>
+        
+        <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>登陆密码：</label>
+
+            <div class="form-controls">
+                <input type="password" class="input password" name="password" >
+                <span class="fi-help-text"></span>
+            </div>
+        </div>
+        
+        <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>管理员权限：</label>
+
+            <div class="form-controls">
+                <select class="select cate" name="cate">
+					<foreach name="cate_list" item="vo" >
+                    <option value="{$vo.id}">{$vo.per_name}</option>
+                    </foreach>
+                </select>
+                <span class="fi-help-text"></span>
+            </div>
+        </div>
+    </div>
+    <div class="jbox-buttons"><a href="javascript:void(0);" class="jbox-buttons-ok btn btn-primary" id="addcategory">确定</a><a
+            href="javascript:void (0);" class="jbox-buttons-ok btn cancle">取消</a></div>
+</div>
+<div class="jbox editfenlei disshow" style="height:auto">
+    <div class="jbox-title">
+        <div class="jbox-title-txt">修改分类</div>
+        <a href="javascript:;" class="jbox-close cancle"></a></div>
+    <div class="jbox-container" style="height: 140px;">
+        <div class="formitems">
+            <label class="fi-name"><span class="colorRed"></span>登陆账号：</label>
+
+            <div class="form-controls">
+             	<input type="hidden" class="input sort" name="serial" id="adminid" >
+                <input type="text" class="input username" name="username" id="editclassname">
+                <span class="fi-help-text"></span>
+            </div>
+        </div>
+        
+        
+        <div class="formitems">
+            <label class="fi-name"><span class="colorRed"></span>登陆密码：</label>
+
+            <div class="form-controls">
+                <input type="password" class="input password" name="password" id="editpassword" placeholder="不修改不用填写密码">
+                <span class="fi-help-text"></span>
+            </div>
+        </div>
+        
+        <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>管理员权限：</label>
+
+            <div class="form-controls">
+                <select class="select cate" name="cate" id="editcate">
+					<foreach name="cate_list" item="vo" >
+                    <option value="{$vo.id}">{$vo.per_name}</option>
+                    </foreach>
+                </select>
+                <span class="fi-help-text"></span>
+            </div>
+        </div>    
+
+    </div>
+    <div class="jbox-buttons"><a href="javascript:void(0);" class="jbox-buttons-ok btn btn-primary" id="editcategory">确定</a><a
+            href="javascript:;" class="jbox-buttons-ok btn cancle">取消</a></div>
+</div>
+
+<script type="text/javascript">
+    $(".cancle").click(function(){
+        $(this).parent().parent('.jbox').hide();
+        $('#albums-overlay').hide();
+    })
+</script>
+<script>
+
+</script>
+
+<!--添加分类-->
+
+<script type="text/javascript">
+    $(".BtnAddClass").click(function(){
+        $('.addfenlei').show();
+        $('#albums-overlay').show();
+    })
+</script>
+<script type="text/javascript">
+    $("#addcategory").click(function(){
+        var username = $('.username').val(); 
+        var password = $('.password').val();
+        var cate = $('.cate').val();
+
+        if (username == '') {
+            alert("登陆账号不能为空！");
+			$('.username').focus();
+            return false;
+        }
+        if (password == '') {
+            alert("登陆密码不能为空！");
+			$('.password').focus();
+            return false;
+        }
+		
+        $.ajax({
+            url: "{:U('/Admin/System/addAdmin')}",
+            type: "post",
+            dataType: "json",
+            data: {
+                username: username,
+                password: password,
+				cate: cate
+            }
+        }).done(function (g) {
+            if (g.status == 1) {
+                alert(g.info);
+				window.location.reload();
+            } else {
+                alert(g.info);
+            }
+
+        })
+    })
+</script>
+<!--添加分类end-->
+
+
+<!--修改分类-->
+<script type="text/javascript">
+	var categoryid;
+    $(".j-editClass").click(function(){
+        $('.editfenlei').show();
+        $('#albums-overlay').show();
+        var categoryname=$(this).attr('data-title');
+        var adminid=$(this).attr('data-id');
+        var cate=$(this).attr('data-cate');
+        $('#editclassname').val(categoryname);
+        $('#adminid').val(adminid);
+		setSelectChecked(cate);
+    })
+	
+	function setSelectChecked(checkValue){  
+		var select = document.getElementById('editcate');  
+		for(var i=0; i<select.options.length; i++){  
+			if(select.options[i].value == checkValue){  
+				select.options[i].selected = true;  
+				break;  
+			}  
+		}  
+	};  
+	
+    $("#editcategory").click(function(){
+        var username = $('#editclassname').val();  //分类名称
+        var password = $('#editpassword').val();
+		var cate = $('#editcate').val();           //排序
+        var adminid = $('#adminid').val();           //排序
+
+		
+        if (username == '') {
+            alert("登陆账号不能为空！");
+            return false;
+        }
+		
+        $.ajax({
+            url: "{:U('/Admin/System/editAdmin')}",
+            type: "post",
+            dataType: "json",
+            data: {
+                username: username,
+              	password: password,
+				cate: cate, 
+                id: adminid
+            }
+        }).done(function (g) {
+			if (g.status == 1) {
+                alert(g.info);
+                window.location.reload();
+            } else {
+                alert(g.info);
+            }
+
+        })
+    })
+	
+	$('.j-able').click(function(){
+		var id = $(this).attr("data-id");
+		var able = $(this).attr("data-able");
+        $.ajax({
+            url: "{:U('/Admin/System/ableAdmin')}",
+            type: "post",
+            dataType: "json",
+            data: {
+                id: id,
+				able: able
+            }
+        }).done(function (g) {
+			if (g.status == 1) {
+                alert(g.info);
+                window.location.reload();
+            } else {
+                alert(g.info);
+            }
+
+        })
+	})
+	$('.j-delClass').click(function(){
+		var is_ture = confirm('确定要删除吗？');
+		if(is_ture)
+		{
+			var id = $(this).attr("data-id");
+			$.ajax({
+				url: "{:U('/Admin/System/deladmin')}",
+				type: "post",
+				dataType: "json",
+				data: {
+					id: id
+				}
+			}).done(function (g) {
+				if (g.status == 1) {
+					alert(g.info);
+					window.location.reload();
+				} else {
+					alert(g.info);
+				}
+	
+			})
+		}
+		
+	})
+	
+</script>
+<!--修改分类end-->

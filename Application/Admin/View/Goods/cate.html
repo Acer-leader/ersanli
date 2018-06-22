@@ -1,0 +1,268 @@
+<include file="Public:head"/>
+<div class="container">
+  <div class="inner clearfix"> <include file="Public:left" />
+    <div class="content-right fl">
+      <h1 class="content-right-title">分类列表</h1>
+      <div class="alert alert-info disable-del"> 目前拥有 <span style="font-size:16px;">{$catelists|count}</span>个分类。 <a href="javascript:;" class="alert-delete" title="隐藏"><i class="gicon-remove"></i></a> </div>
+      <div class="tablesWrap">
+        <div class="tables-searchbox">
+          <div class="fl">
+          <a href="javascript:;" class="btn btn-success fl BtnAddClass">添加分类</a>
+          </div>
+        </div>
+        <!-- end tables-searchbox -->
+        <table class="wxtables" style="text-align:center;">
+          <colgroup>
+          <col width="6%">
+          <col width="16%">
+          <col width="10%">
+          <col width="8%">
+          <col width="8%">
+          <col width="14%">
+          <col width="15%">
+          </colgroup>
+          <thead>
+            <tr>
+              <td>分类ID</td>
+              <td>标题</td>
+              <td>分类LOGO</td>
+              <td>排序</td>
+              <td>状态</td>
+              <td>创建时间</td>
+              <td>操作</td>
+            </tr>
+          </thead>
+          <tbody>
+            <foreach name="catelists" item="vo">
+              <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.classname}</td>
+                <td><img src="{$vo.pic}" height="50"></td>
+                <td>{$vo.sorts}</td>
+                <td class="status">
+                  <switch name="vo.status">
+                    <case value="0">
+                      <p style='color:green;'>显示</p>
+                    </case>
+                    <case value="1">
+                      <p style='color:red;'>隐藏</p>
+                    </case>
+                  </switch></td>
+                <td>{$vo.create_at}</td>
+                <td>
+                    <a href="JavaScript:void(0);" class='btn J-editInfo btn-success' data-info='{$vo.info}' title="编辑">编辑</a>
+                    <a href="JavaScript:void(0);" class='btn j-delClass btn-warning' data-id="{$vo.id}">删除</a>
+                    <switch name="vo.status">
+                      <case value="0"> <a href="JavaScript:void(0);" class="btn btn-warning changeStatus" title="隐藏" data-status="{$list.status}" data-id="{$vo.id}">隐藏</a> </case>
+                      <case value="1"> <a href="JavaScript:void(0);" class="btn btn-success changeStatus" title="显示" data-status="{$list.status}" data-id="{$vo.id}">显示</a> </case>
+                    </switch>
+                </td>
+              </tr>
+            </foreach>
+          </tbody>
+        </table>
+        <!-- end wxtables -->
+        <div class="tables-btmctrl clearfix">
+          <div class="fl">
+            <div class="pages" style="width:100%;margin-left:0px;"> {$page} </div>
+            <!-- end paginate -->
+          </div>
+        </div>
+        <!-- end tables-btmctrl -->
+      </div>
+      <!-- end tablesWrap -->
+    </div>
+    <!-- end content-right -->
+  </div>
+</div>
+<include file="Public:foot"/>
+<div id="albums-overlay" class="disshow"></div>
+<div class="jbox addfenlei disshow" style="height:auto;">
+  <div class="jbox-title">
+    <div class="jbox-title-txt">添加分类</div>
+    <a href="javascript:;" class="jbox-close cancle"></a></div>
+  <div class="jbox-container" style="height: auto;">
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed"></span>标题：</label>
+      <div class="form-controls">
+        <label>
+          <input type="text" class="input" name="classname" value="" placeholder="">
+          <span class="red">*必填</span> </label>
+        <span class="fi-help-text"></span> </div>
+    </div>
+    <div class="formitems" style=" height:60px;">
+      <label class="fi-name"><span class="colorRed"></span>上传LOGO：</label>
+      <div class="form-controls images">
+        <div class="showimg"></div>
+        <div class="imagesadd">+</div>
+        <input type="file" accept="image/jpg,image/jpeg,image/png" class="input sort" name="serial" id="addimage" >
+        <div class="progress">
+          <div class="bar"></div>
+        </div>
+        <span class="fi-help-text" style="left:85px; position:absolute; top:40px; width:150px; height:20px;">建议大小（宽809高310）</span> </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed"></span>排序：</label>
+      <div class="form-controls">
+        <label>
+          <input type="text" name="sorts" value="0" class="input" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+          <span class="red">*必填</span> </label>
+        <span class="fi-help-text"></span></div>
+    </div>
+  </div>
+  <div class="jbox-buttons">
+  <a href="javascript:void(0);" class="jbox-buttons-ok btn btn-primary" id="examine">确定</a>
+  <a href="javascript:void(0);" class="jbox-buttons-ok btn cancle">取消</a></div>
+</div>
+<script type="text/javascript" src="__JS__/jquery-form.js"></script>
+<script type="text/javascript">
+$(".cancle").click(function(){
+    $(this).parent().parent('.jbox').hide();
+    $('#albums-overlay').hide();
+    window.location.reload();
+})
+$(function () {
+    var progress = $(".img");
+    var bar = $('.bar') ;
+    var percent = $('.percent');
+    var progress = $('.progress');
+    $("#addimage").wrap("<form id='myupload' action='{:U('/Admin/Index/addImage')}' method='post' enctype='multipart/form-data'></form>");
+    $("#addimage").change(function(){ //选择文件
+        $("#myupload").ajaxSubmit({
+            dataType:  'json', //数据格式为json
+            beforeSend: function() { //开始上传
+                progress.show(); //显示进度条
+                var percentVal = '0%';
+                bar.width(percentVal);
+                percent.html(percentVal);
+            },
+            uploadProgress: function(event, position, total, percentComplete) {
+                var percentVal = percentComplete + '%'; //获得进度
+                bar.width(percentVal); //上传进度条宽度变宽
+                percent.html(percentVal); //显示上传进度百分比
+            },
+            success: function(data) { //成功
+                var img = '<img src="'+data[0]["savepath"].substr(1)+data[0]["savename"]+'" width="80" height="56" style="margin-top:-28px;"><input type="hidden" name="pic" id="addpic" value="'+data[0]["savepath"].substr(1)+data[0]["savename"]+'"></input>';
+                $('.showimg').html(img);
+                $("#addimage").val('');
+                progress.hide();
+            },
+            error:function(xhr){ //上传失败
+                console.log(xhr.status)
+            }
+        });
+    });
+});
+</script>
+<!--添加分类-->
+<script type="text/javascript">
+var id=0;
+$(".BtnAddClass").click(function(){
+    $('.addfenlei').show();
+    $('#albums-overlay').show();
+})
+<!--添加部分-->
+<!--修改部分-->
+$(".J-editInfo").click(function(){
+    var info = JSON.parse($.trim($(this).attr("data-info")));
+    if(info.id < 1){
+        dialog.showTips('错误的编辑','warn');return false;
+    }
+    id = info.id;
+    $(".jbox-title-txt").html('修改分类');
+    $(".addfenlei input[name=classname]").val(info.classname);
+    $(".addfenlei input[name=sorts]").val(info.sorts)
+    if(info.pic !=""){
+        var img = '<img src="'+info.pic+'" width="80" height="56" style="margin-top:-28px;"><input type="hidden" name="pic" id="addpic" value="'+info.pic+'"></input>';
+        $('.showimg').html(img);
+    }else{
+        $('.showimg').html('');
+    }
+    $('.addfenlei').show();
+    $('#albums-overlay').show();
+})
+<!--修改部分-->
+$("#examine").click(function(){
+    var classname = $.trim($(".addfenlei input[name=classname]").val());
+    var pic       = $.trim($("#addpic").val());
+    var sorts     = parseInt($(".addfenlei input[name=sorts]").val());
+    if(classname.length<1){
+        dialog.showTips('分类必填','warn');return false;
+    }else if(classname.length>10){
+        dialog.showTips('分类必填10字内','warn');return false;
+    }
+    if(id == 0){
+        if(pic.length < 10){
+            dialog.showTips('请上传分类LOGO!','warn');return false;
+        }
+    }
+    var storeid  = "{$storeid}";
+    var malltype = "{$malltype}";
+    var data = {action:'addEdit',storeid:storeid,malltype:malltype,id:id,classname:classname,sorts:sorts,poster:pic}
+    $.post("{:U('Admin/goods/addcate')}",data,function(g){
+        if(g.status==1){
+            dialog.showTips(g.info,'',1);return false;
+        }else{
+            dialog.showTips(g.info,'warn');return false;
+        }
+    },"json");
+})
+</script>
+<!--添加分类end-->
+<!--修改状态-->
+<script>
+$(".changeStatus").click(function()
+{   //是否显示隐藏
+    var id = $(this).attr("data-id");
+    if(!id){
+        dialog.showTips('错误的请求','warn');return false;
+    }
+    var _this = $(this);
+    $.post("{:U('Admin/Goods/hidecate')}",{action:'changeStatus',id:id},function(data){
+        if(data.status == 1){
+            var p = _this.parents('tr').find(".status p");
+            p.html(data.text);
+            _this.attr('data-status',data.status);
+            if(_this.hasClass("btn-success")){
+                _this.removeClass("btn-success").addClass("btn-warning").html("隐藏");
+                p.css("color","green")
+            }else{
+                _this.removeClass("btn-warning").addClass("btn-success").html("显示");
+                p.css("color","red");
+            }
+            //window.location.reload();   //刷新当前页面.
+        }else{
+            alert("修改失败");
+        }
+    },"json")
+})
+<!--修改状态-->
+</script>
+<!--删除分类 1-->
+<script>
+$(".j-delClass").click(function(){   //是否开始结束
+    var id = $(this).attr("data-id");
+    if(id > 0){
+        if(confirm('确定要删除吗？')){
+            $.ajax({
+                url: "{:U('Admin/Pointsmall/cateAddEditDelStatus')}",
+                type: "post",
+                dataType: "json",
+                data: {
+                    action:'Del',
+                    id: id,
+                }
+            }).done(function (res) {
+                if (res.status == 1) {
+                    dialog.showTips(res.info,"",1); return false;
+                } else {
+                    dialog.showTips(res.info,"warn"); return false;
+                }
+            })
+        }
+    }else{
+        dialog.showTips('错误的请求','warn');return false;
+    }
+});
+</script>
+<!--删除分类 2-->

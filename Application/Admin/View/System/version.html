@@ -1,0 +1,411 @@
+<include file="Public:head"/>
+<style>
+.btn-success{
+	margin-top:12px;
+}
+</style>
+<div class="container">
+    <div class="inner clearfix">
+    	<include file="Public:systemleft" />
+        <!-- end content-left -->
+
+        <div class="content-right fl">
+
+
+            <h1 class="content-right-title">app版本管理</h1>
+
+
+            
+            <form action="" method="post">
+
+
+                <div class="clearfix">
+                    <a href="javascript:;" class="btn btn-success fl BtnAddClass">添加版本</a>
+
+                    <!--<div class="tables-searchbox fr">
+                        <input type="text" placeholder="分类名称" class="input" name="class_name" value="">
+                        <button class="btn"><i class="gicon-search"></i>查询</button>
+                    </div>-->
+                </div>
+            </form>
+
+            <table class="wxtables mgt15">
+                <colgroup>
+                    <col width="2%">
+                    <col width="6%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="20%">
+                </colgroup>
+                <thead>
+                <tr>
+                    <td></td>
+                    <td>版本id</td>
+                    <!-- <td>管理员权限</td> -->
+                    <td>版本号</td>
+                    <td>是否强更</td>
+                    <td>添加时间</td>
+                    <td>状态</td>
+                    <td class="center">操作</td>
+                </tr>
+                </thead>
+                <tbody>
+                <foreach name="cache"  item="vo" >
+
+                <tr>
+                    <td></td>
+                    <td>{$vo.version_code}</td>
+                    <td>{$vo.version_name}</td>
+                    <td>
+                        <switch name="vo['isforce']">
+                            <case value="0">不需要</case>
+                            <case value="1">需要</case>
+                        </switch>
+                    </td>
+                    <td>{$vo.addtime}</td>
+                    <td><eq name="vo.status" value="0" ><span class="red">未启用</span></eq><eq name="vo.status" value="1"><span class="green">已启用</span></eq></td>
+                    <td class="center">
+                        <a href="javascript:;" class="btn btn-primary j-editClass" title="编辑" data-id="{$vo.id}" data-isforce="{$vo.isforce}" data-updateMsg="{$vo.update_msg}" data-andDown="{$vo.android_link}" data-iosDown="{$vo.ios_link}" data-versionCode="{$vo.version_code}" data-versionName="{$vo.version_name}">编辑</a>
+                        <eq name="vo.status" value="0"><a href="javascript:;" class="btn btn-warning j-able"  title="启用" data-id="{$vo.id}">启用</a></eq>
+                        <eq name="vo.status" value="1"><a href="javascript:;" class="btn btn-danger j-able"  title="启用" data-id="{$vo.id}">停用</a></eq> 
+                    </td>
+                </tr>
+                </foreach>
+                </tbody>
+            </table>
+            <!-- end wxtables -->
+            <div class="tables-btmctrl clearfix">
+                <div class="fl">
+<!--                    <a href="javascript:;" class="btn btn-primary btn_table_selectAll">全选</a>
+                    <a href="javascript:;" class="btn btn-primary btn_table_Cancle">取消</a>-->
+                    <!--<a href="javascript;" class="btn btn-primary btn_table_delAll">批量删除</a></div>-->
+                <div class="fr">
+                    <!--<div class="paginate">-->
+
+                        <div class="pages">
+                            {$page}
+                        <!--</div>-->
+                    </div>
+                    <!-- end paginate -->
+                </div>
+            </div>
+            <!-- end tables-btmctrl -->
+        </div>
+        <!-- end content-right -->
+    </div>
+</div>
+<!-- end container -->
+<include file="Public:foot"/>
+
+<div id="albums-overlay" class="disshow"></div>
+<div class="jbox addfenlei disshow" style="height:auto;">
+    <div class="jbox-title">
+        <div class="jbox-title-txt">添加版本</div>
+        <a href="javascript:;" class="jbox-close cancle"></a></div>
+    <div class="jbox-container" style="height: 140px;">
+         <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>版本id：</label>
+            <div class="form-controls">
+                <input type="text" class="input versionCode" name="" >
+                <span class="fi-help-text"></span>
+            </div>
+        </div>
+        <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>版本号：</label>
+            <div class="form-controls">
+                <input type="text" class="input versionName" name="" >
+                <span class="fi-help-text"></span>
+            </div>
+        </div>
+        <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>安卓版链接：</label>
+            <div class="form-controls">
+                <input type="text" class="input andDown" name="" >
+                <span class="fi-help-text"></span>
+            </div>
+        </div>
+        <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>ios版链接：</label>
+            <div class="form-controls">
+                <input type="text" class="input iosDown" name="" >
+                <span class="fi-help-text"></span>
+            </div>
+        </div>
+        
+        <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>更新信息：</label>
+
+            <div class="form-controls">
+                <textarea class="updateMsg" id="" cols="30" rows="10"></textarea>
+                <span class="fi-help-text"></span>
+            </div>
+        </div>
+        
+        <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>是否需要强制更新：</label>
+
+            <div class="form-controls">
+                <select class="select isforce" name="">
+                    <option value="0">不需要</option>
+                    <option value="1">需要</option>
+                </select>
+                <span class="fi-help-text"></span>
+            </div>
+        </div>
+    </div>
+    <div class="jbox-buttons"><a href="javascript:void(0);" class="jbox-buttons-ok btn btn-primary" id="addcategory">确定</a><a
+            href="javascript:void (0);" class="jbox-buttons-ok btn cancle">取消</a></div>
+</div>
+<div class="jbox editfenlei disshow" style="height:auto">
+    <div class="jbox-title">
+        <div class="jbox-title-txt">修改版本</div>
+        <a href="javascript:;" class="jbox-close cancle"></a></div>
+    <div class="jbox-container" style="height: 140px;">
+         <input type="hidden" class="input" id="id" name="" >
+         <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>版本id：</label>
+            <div class="form-controls">
+                <input type="text" class="input versionCode" name="" >
+                <span class="fi-help-text"></span>
+            </div>
+        </div>
+        <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>版本号：</label>
+            <div class="form-controls">
+                <input type="text" class="input versionName" name="" >
+                <span class="fi-help-text"></span>
+            </div>
+        </div>
+        <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>安卓版链接：</label>
+            <div class="form-controls">
+                <input type="text" class="input andDown" name="" >
+                <span class="fi-help-text"></span>
+            </div>
+        </div>
+        <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>ios版链接：</label>
+            <div class="form-controls">
+                <input type="text" class="input iosDown" name="" >
+                <span class="fi-help-text"></span>
+            </div>
+        </div>
+        
+        <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>更新信息：</label>
+
+            <div class="form-controls">
+                <textarea class="updateMsg" id="" cols="30" rows="10"></textarea>
+                <span class="fi-help-text"></span>
+            </div>
+        </div>
+        
+        <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>是否需要强制更新：</label>
+
+            <div class="form-controls">
+                <select class="select isforce" name="">
+                    <option value="0">不需要</option>
+                    <option value="1">需要</option>
+                </select>
+                <span class="fi-help-text"></span>
+            </div>
+        </div>
+
+    </div>
+    <div class="jbox-buttons"><a href="javascript:void(0);" class="jbox-buttons-ok btn btn-primary" id="editcategory">确定</a><a
+            href="javascript:;" class="jbox-buttons-ok btn cancle">取消</a></div>
+</div>
+
+<script type="text/javascript">
+    $(".cancle").click(function(){
+        $(this).parent().parent('.jbox').hide();
+        $('#albums-overlay').hide();
+    })
+</script>
+<script>
+
+</script>
+
+<!--添加分类-->
+
+<script type="text/javascript">
+    $(".BtnAddClass").click(function(){
+        $('.addfenlei').show();
+        $('#albums-overlay').show();
+    })
+</script>
+<script type="text/javascript">
+    $("#addcategory").click(function(){
+        var versionCode = $('.addfenlei .versionCode').val();
+        var versionName = $('.addfenlei .versionName').val();
+        var andDown = $('.addfenlei .andDown').val();
+        var iosDown = $('.addfenlei .iosDown').val();
+        var updateMsg = $('.addfenlei .updateMsg').val();
+        var isforce = $('.addfenlei .isforce').val();
+
+
+        if (versionCode == '') {
+            alert("版本id不能为空！");
+			$('addfenlei .versionCode').focus();
+            return false;
+        }
+        if (versionName == '') {
+            alert("版本号不能为空！");
+            $('addfenlei .password').focus();
+            return false;
+        }
+        if (updateMsg == '') {
+            alert("更新描述不能为空");
+            $('addfenlei .updateMsg').focus();
+            return false;
+        }
+		
+        $.ajax({
+            url: "{:U('/Admin/System/addVersion')}",
+            type: "post",
+            dataType: "json",
+            data: {
+                version_code: versionCode,
+                version_name: versionName,
+                android_link: andDown,
+                ios_link: iosDown,
+                update_msg: updateMsg,
+				isforce: isforce?isforce:0,
+            }
+        }).done(function (g) {
+            if (g.status == 1) {
+                alert(g.info);
+				window.location.reload();
+            } else {
+                alert(g.info);
+            }
+        })
+    })
+</script>
+<!--添加分类end-->
+
+
+<!--修改分类-->
+<script type="text/javascript">
+	var categoryid;
+    $(".j-editClass").click(function(){
+        $('.editfenlei').show();
+        $('#albums-overlay').show();
+        $('.editfenlei .versionCode').val($(this).attr("data-versionCode"));
+        $('.editfenlei .versionName').val($(this).attr("data-versionName"));
+        $('.editfenlei .andDown').val($(this).attr("data-andDown"));
+        $('.editfenlei .iosDown').val($(this).attr("data-iosDown"));
+        $('.editfenlei .updateMsg').val($(this).attr("data-updateMsg"));
+        $('#id').val($(this).attr("data-id"));
+        $('.editfenlei .isforce option[value='+$(this).attr("data-isforce")+']').attr("selected",true);
+    })
+	
+	function setSelectChecked(checkValue){  
+		var select = document.getElementById('editcate');  
+		for(var i=0; i<select.options.length; i++){  
+			if(select.options[i].value == checkValue){  
+				select.options[i].selected = true;  
+				break;  
+			}  
+		}  
+	};  
+	
+    $("#editcategory").click(function(){
+        var id = $("#id").val();
+        var versionCode = $('.editfenlei .versionCode').val();
+        var versionName = $('.editfenlei .versionName').val();
+        var andDown = $('.editfenlei .andDown').val();
+        var iosDown = $('.editfenlei .iosDown').val();
+        var updateMsg = $('.editfenlei .updateMsg').val();
+        var isforce = $('.editfenlei .isforce').val();
+
+
+        if (versionCode == '') {
+            alert("版本id不能为空！");
+            $('addfenlei .versionCode').focus();
+            return false;
+        }
+        if (versionName == '') {
+            alert("版本号不能为空！");
+            $('addfenlei .password').focus();
+            return false;
+        }
+        if (updateMsg == '') {
+            alert("更新描述不能为空");
+            $('addfenlei .updateMsg').focus();
+            return false;
+        }
+        
+        $.ajax({
+            url: "{:U('/Admin/System/editVersion')}",
+            type: "post",
+            dataType: "json",
+            data: {
+                id:id,
+                version_code: versionCode,
+                version_name: versionName,
+                android_link: andDown,
+                ios_link: iosDown,
+                update_msg: updateMsg,
+                isforce: isforce?isforce:0,
+            }
+        }).done(function (g) {
+            if (g.status == 1) {
+                alert(g.info);
+                window.location.reload();
+            } else {
+                alert(g.info);
+            }
+        })
+    })
+	
+	$('.j-able').click(function(){
+		var id = $(this).attr("data-id");
+		var able = $(this).attr("data-able");
+        $.ajax({
+            url: "{:U('/Admin/System/useVersion')}",
+            type: "post",
+            dataType: "json",
+            data: {
+                id: id,
+            }
+        }).done(function (g) {
+			if (g.status == 1) {
+                alert(g.info);
+                window.location.reload();
+            } else {
+                alert(g.info);
+            }
+
+        })
+	})
+	$('.j-delClass').click(function(){
+		var is_ture = confirm('确定要删除吗？');
+		if(is_ture)
+		{
+			var id = $(this).attr("data-id");
+			$.ajax({
+				url: "{:U('/Admin/System/deladmin')}",
+				type: "post",
+				dataType: "json",
+				data: {
+					id: id
+				}
+			}).done(function (g) {
+				if (g.status == 1) {
+					alert(g.info);
+					window.location.reload();
+				} else {
+					alert(g.info);
+				}
+	
+			})
+		}
+		
+	})
+	
+</script>
+<!--修改分类end-->

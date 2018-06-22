@@ -1,0 +1,133 @@
+<include file="Public:head"/>
+<style>
+.btn-success {
+	margin-top: 12px;
+}
+.access-padding {
+	padding: 3px;
+}
+.access-padding div {
+	float: left;
+	margin-right: 5px;
+}
+/*.level-1{
+    background: #eee;
+}
+.level-2{
+    background: #ddd;
+}
+.level-3{
+    background: #ccc;
+}
+.level-4{
+    background: #bbb;
+}*/
+.access-padding a:hover {
+	color: red;
+}
+</style>
+<div class="container">
+<div class="inner clearfix"> <include file="Public:left" /> 
+  <!-- end content-left -->
+  <div class="content-right fl">
+    <h1 class="content-right-title">权限分配————[{$per_name}]</h1>
+    <div class="alert alert-info disable-del">建议将[首页]——[后台主页]——[主页]——[主页]勾选，避免出现用户无法登入后台的现象。 <a href="javascript:;" class="alert-delete" title="隐藏"><i class="gicon-remove"></i></a> </div>
+    <form action="" method="post">
+      <div class="clearfix"> <a href="javascript:;" class="btn btn-success fl check-all">全选</a></div>
+    </form>
+    <table class="wxtables">
+      <colgroup>
+      <col width="100%">
+      </colgroup>
+      <tbody>
+        <foreach name="cache" item="v1">
+          <tr>
+            <td class="access-padding level-1"> [头部导航] <input type="checkbox" value="{$v1.id}" data-pid="{$v1.pid}" data-pid2="{$v1.pid2}" data-pid3="{$v1.pid3}" class="checkbox table-ckbs" data-id="{$v1.id}" 
+              <if condition="in_array($v1['id'],$node_arr)">checked</if>
+              data-name=""> <b>{$v1.classname} </b></td>
+          </tr>
+          <foreach name="v1['nodes']" item="v2">
+            <tr>
+              <td class="access-padding  level-2">&nbsp;&nbsp;[左侧标签] <input type="checkbox" value="{$v2.id}" data-pid="{$v2.pid}" data-pid2="{$v2.pid2}" data-pid3="{$v2.pid3}"  class="checkbox table-ckbs" data-id="{$v2.id}" 
+                <if condition="in_array($v2['id'],$node_arr)">checked</if>
+                data-name="">
+                {$v2.classname} </td>
+            </tr>
+            <foreach name="v2['nodes']" item="v3" key="k">
+              <tr>
+                <td class="access-padding  level-3">&nbsp;&nbsp;&nbsp;&nbsp;[左侧导航] <input type="checkbox" value="{$v3.id}" data-pid="{$v3.pid}" data-pid2="{$v3.pid2}" data-pid3="{$v3.pid3}" class="checkbox table-ckbs" data-id="{$v3.id}" 
+                  <if condition="in_array($v3['id'],$node_arr)">checked</if>
+                  data-name="">
+                  {$v3.classname} </td>
+              </tr>
+              <?php
+                        if($v3["nodes"]){?>
+              <tr>
+                <td class="access-padding  level-4"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[内容节点]</div>
+                  <?php
+                        foreach($v3["nodes"] as $v4){?>
+                  <div>
+                    <input type="checkbox" value="<?php echo $v4['id']?>" data-pid="<?php echo $v4['pid']?>" data-pid2="<?php echo $v4['pid2']?>" data-pid3="<?php echo $v4['pid3']?>" class="checkbox table-ckbs" data-id="<?php echo $v4['id']?>" data-name="" <?php if(in_array($v4['id'], $node_arr)){echo "checked";} ?>>
+                    <?php echo $v4['classname']?> </div>
+                  <?php  }?></td>
+              </tr>
+              <?php  }?>
+            </foreach>
+          </foreach>
+        </foreach>
+      </tbody>
+    </table>
+    <div class="panel-single panel-single-light mgt20 txtCenter"> <a href="" class="btn" onclick="history.back()">返回</a>
+      <input type="button" id="sub" class="btn btn-primary" value="保存">
+    </div>
+    
+    <!-- end wxtables -->
+    <div class="tables-btmctrl clearfix">
+      <div class="fl"> 
+        <!--                    <a href="javascript:;" class="btn btn-primary btn_table_selectAll">全选</a>
+                    <a href="javascript:;" class="btn btn-primary btn_table_Cancle">取消</a>--> 
+        <!--<a href="javascript;" class="btn btn-primary btn_table_delAll">批量删除</a></div>-->
+        <div class="fr"> 
+          <!--<div class="paginate">-->
+          
+          <div class="pages"> {$page} 
+            <!--</div>--> 
+          </div>
+          <!-- end paginate --> 
+        </div>
+      </div>
+      <!-- end tables-btmctrl --> 
+    </div>
+    <!-- end content-right --> 
+  </div>
+</div>
+<!-- end container --> 
+<include file="Public:foot"/> 
+<script>
+    $(".check-all").click(function (){
+        $("input[type=checkbox]").prop("checked", $("input[type=checkbox]").prop("checked")^1);
+    })
+    $("#sub").click(function (){
+        var id = "{$id}";
+        var str = "";
+        $("input[type=checkbox]:checked").each(function (i){
+            str += $(this).val()+",";
+        })
+        $.post("{:U('Admin/System/addRoleNode')}", {id:id,ids:str}, function (data){
+            if(data.status){
+				dialog.showTips(data.info,"",'/Admin/system/rolelist');
+            }
+			dialog.showTips(data.info,"warn");
+        }, "json")
+    })
+    $(".wxtables input[type=checkbox]").click(function (){
+        var that = $(this);
+        setTimeout(function (){
+            var id = that.val();
+            var status = that.prop("checked");
+            $("input[type=checkbox][data-pid="+id+"]").prop("checked",status);
+            $("input[type=checkbox][data-pid2="+id+"]").prop("checked",status);
+            $("input[type=checkbox][data-pid3="+id+"]").prop("checked",status);
+        }, 0)
+    })
+</script>

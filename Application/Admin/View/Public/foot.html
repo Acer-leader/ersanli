@@ -1,0 +1,91 @@
+
+<!--gonggao-->
+<div class="footer">{$shop_seo_config.copyright} , Inc. All rights reserved.</div>
+<!-- end footer -->
+<div class="fixedBar" style="left: 1321px; height: 285px; top: 76px; margin-top: 0px;">
+    <!--<ul>
+        <li class="shopManager0 cur"><a href="javascript:;" data-target="#shop_0">店铺管理</a></li><li class="shopManager1"><a href="javascript:;" data-target="#shop_1">自定义专题</a></li><li class="shopManager2"><a href="javascript:;" data-target="#shop_2">商品管理</a></li><li class="shopManager3"><a href="javascript:;" data-target="#shop_3">分组管理</a></li><li class="shopManager4"><a href="javascript:;" data-target="#shop_4">批量导入</a></li><li class="shopManager5"><a href="javascript:;" data-target="#shop_5">订单管理</a></li><li class="shopManager6"><a href="javascript:;" data-target="#shop_6">售后服务</a></li><li class="shopManager8"><a href="javascript:;" data-target="#shop_8">会员管理</a></li><li class="shopManager7"><a href="javascript:;" data-target="#shop_7">分销商</a></li><li class="shopManager9"><a href="javascript:;" data-target="#shop_9">分销财务</a></li>        </ul>-->
+</div>
+<a href="#" id="j-gotop" class="gotop" title="回到顶部" style="left: 1322.5px;"></a>
+<!-- end gotop -->
+
+
+
+
+<!--end front template  -->
+
+<script src="__JS__/lib-min.js"></script>
+<script src="__JS__/jquery.jbox-min.js"></script>
+<script src="__JS__/jquery.zclip-min.js"></script>
+<!-- 线上环境 -->
+<script src="__JS__/component-min.js"></script>
+<script src="__JS__/scroll.js"></script>
+<script src="__JS__/echarts.min.js"></script>
+<!--[if lt IE 10]>
+<script src="./__JS__/jquery.placeholder-min.js"></script>
+<script>
+    $(function(){
+        //修复IE下的placeholder
+        $('.input,.textarea').placeholder();
+    });
+</script>
+<![endif]-->
+
+
+<script>
+    $(function(){
+        $(".j-copy").zclip({
+            path: '/Public/plugins/zclip/ZeroClipboard.swf',
+            copy: function(){
+                return $(this).data('copy');
+            },
+            afterCopy:function(){
+                HYD.hint("success","内容已成功复制到您的剪贴板中");
+            }
+        });
+        $(".btn-notice").click(function(){
+            // $.post('/System/readAllNotice',{},function(){
+            //     window.location.reload();
+            // })
+            $.ajax({
+                url: '/System/readAllNotice',
+                type: 'POST',
+                success:function(data){
+                    if(data.status == 1){
+                        window.location.reload();
+                    }else{
+                        HYD.hint("danger",data.msg);
+                    }
+
+                }
+            })
+        });
+
+
+        ;(function(){
+            // 首页竖线到底
+            var height1=$(".content-right").height();
+            var height2=$(".content-left").height();
+            if(parseInt(height1) < parseInt(height2)){
+                $(".content-right").css({'min-height': height2});
+            };
+
+        })();
+
+    });
+</script>
+<!-- end session hint -->
+<script>
+    $(function () {
+        setTimeout(gggoup(),5000);
+        $('.gound_close').click(function(){
+            $('#gonggao').animate({bottom:"-270px"},1000);
+        });
+    });
+    function gggoup(){
+        $('#gonggao').animate({bottom:"3px"},1000);
+    };
+</script>
+
+
+</body></html>

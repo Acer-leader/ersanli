@@ -1,0 +1,324 @@
+<include file="Public:head"/>
+<style>
+.btn-success {
+	margin-top: 12px;
+}
+</style>
+<div class="container">
+<div class="inner clearfix"> <include file="Public:systemleft"/> 
+  <!-- end content-left -->
+  
+  <div class="content-right fl">
+    <h1 class="content-right-title">敏感词列表</h1>
+    <div class="tablesWrap clearfix">
+          <div class="tables-searchbox">
+              <div class="fl">
+                  <form action="{:U('Admin/System/minganList')}">
+                      <input type="text" class="input" name="title" id="title" value="{$title}" placeholder="敏感词汇">
+
+                      <select class="select" name="status">
+                          <option value="">--请选择--</option>
+                          <option value="0" <eq name="status" value="0">selected="selected"</eq>>已禁用</option>
+                          <option value="1" <eq name="status" value="1">selected="selected"</eq>>已启用</option>
+                      </select>
+
+                      <button class="btn btn-primary" id="search_m" style="vertical-align:-2px;"><i
+                              class="gicon-search white"></i>查询
+                      </button>
+                  </form>
+              </div>
+
+          </div>
+        </div>
+
+
+      <div class="clearfix"> <a href="javascript:;" class="btn btn-success fl BtnAddClass">添加敏感词</a> 
+  
+      </div>
+    <table class="wxtables mgt15">
+      <colgroup>
+      <col width="2%">
+      <col width="20%">
+      <col width="10%">
+      <col width="15%">
+      <col width="20%">
+      <col width="38%">
+      </colgroup>
+      <thead>
+        <tr>
+          <td><i class="icon_check"></i></td>
+          <td>词汇内容</td>
+          <td>状态</td>
+          <!--<td style="text-align:center">显隐操作</td>-->
+          <td class="center">操作</td>
+        </tr>
+      </thead>
+      <tbody>
+        <foreach name="cache" item="vo" >
+          <tr>
+            <td class="center"><input type="checkbox" class="checkbox table-ckbs" data-id="9788"></td>
+            <td>{$vo.word}</td>
+            <td>
+              <switch name="vo[status]">
+                <case value="0"><span style="color:red">禁用</span></case>
+                <case value="1"><span style="color:green">启用</span></case>
+              </switch>
+            </td>
+            <td class="center"><a href="javascript:void(0);" class="btn btn-primary j-editClass" title="编辑" data-id="{$vo.id}" data-word="{$vo.word}" data-status="{$vo.status}">编辑</a> <a href="{:U('/Admin/System/delmingan/cid')}/{$vo.id}" class="btn btn-warning j-delClass" title="删除" onclick="return confirm('确定要删除吗？')" data-id="{$vo.id}">删除</a> 
+            </td>
+          </tr>
+        </foreach>
+      </tbody>
+    </table>
+    <!-- end wxtables -->
+    <div class="tables-btmctrl clearfix">
+      <div class="fl"> <a href="javascript:;" class="btn btn-primary btn_table_selectAll">全选</a> <a href="javascript:;" class="btn btn-primary btn_table_Cancle">取消</a> 
+        <!--<a href="javascript;" class="btn btn-primary btn_table_delAll">批量删除</a></div>-->
+        <div class="fr"> 
+          <!--<div class="paginate">-->
+          
+          <div class="pages"> 
+                <div class="pages" style="float:none;width:100%;text-align:left;padding-top:10px;">
+                    {$page}
+                </div>
+          </div>
+          <!-- end paginate --> 
+        </div>
+      </div>
+      <!-- end tables-btmctrl --> 
+    </div>
+    <!-- end content-right --> 
+  </div>
+</div>
+<!-- end container --> 
+<include file="Public:foot"/>
+<div id="albums-overlay" class="disshow"></div>
+<div class="jbox addfenlei disshow">
+  <div class="jbox-title">
+    <div class="jbox-title-txt">添加敏感词</div>
+    <a href="javascript:;" class="jbox-close cancle"></a></div>
+  <div class="jbox-container" style="height: 263px;">
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>词汇内容：</label>
+      <div class="form-controls">
+        <input type="text" class="input classname" name="classname" >
+        <span class="fi-help-text"></span> </div>
+    </div>
+    
+    
+    
+  </div>
+  <div class="jbox-buttons"><a href="javascript:void(0);" class="jbox-buttons-ok btn btn-primary" id="addcategory">确定</a><a
+            href="javascript:void (0);" class="jbox-buttons-ok btn cancle">取消</a></div>
+</div>
+
+
+
+
+
+
+<div class="jbox editfenlei disshow">
+  <div class="jbox-title">
+    <div class="jbox-title-txt">修改敏感词</div>
+    <a href="javascript:;" class="jbox-close cancle"></a></div>
+  <div class="jbox-container" style="height: 263px;">
+    
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>词汇内容：</label>
+      <div class="form-controls">
+        <input type="text" class="input classname" name="classname" id="word">
+        <span class="fi-help-text"></span> </div>
+    </div>
+        <input type="hidden" class="input classname" name="classname" id="id">
+    
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>词汇状态：</label>
+      <div class="form-controls">
+        <select name="status" id="status">
+            <option value="1">开启</option>
+            <option value="0">禁用</option>
+        </select>
+        <span class="fi-help-text"></span> 
+      </div>
+    </div>
+  </div>
+  <div class="jbox-buttons"><a href="javascript:void(0);" class="jbox-buttons-ok btn btn-primary" id="editcategory">确定</a><a
+            href="javascript:;" class="jbox-buttons-ok btn cancle">取消</a></div>
+</div>
+
+
+
+
+<script type="text/javascript" src="__JS__/jquery-form.js"></script>
+<script type="text/javascript">
+    $(".cancle").click(function(){
+        $(this).parent().parent('.jbox').hide();
+        $('#albums-overlay').hide();
+    })
+	
+	$(function () { 
+		var progress = $(".img"); 
+		var bar = $('.bar') ;
+		var percent = $('.percent'); 
+		var progress = $('.progress');
+		$("#addimage").wrap("<form id='myupload' action='{:U('/Admin/Job/addImage')}' method='post' enctype='multipart/form-data'></form>"); 
+		$("#addimage").change(function(){ //选择文件 
+			$("#myupload").ajaxSubmit({ 
+				dataType:  'json', //数据格式为json 
+				beforeSend: function() { //开始上传 
+					progress.show(); //显示进度条
+					var percentVal = '0%';
+					bar.width(percentVal);
+					percent.html(percentVal);	
+				}, 
+				uploadProgress: function(event, position, total, percentComplete) { 
+					var percentVal = percentComplete + '%'; //获得进度 
+					bar.width(percentVal); //上传进度条宽度变宽 
+					percent.html(percentVal); //显示上传进度百分比 
+				}, 
+				success: function(data) { //成功 
+					var img = '<img src="'+data[0]["savepath"].substr(1)+data[0]["savename"]+'" width="80" height="56" style="margin-top:-28px;"><input type="hidden" name="pic" id="addpic" value="'+data[0]["savepath"].substr(1)+data[0]["savename"]+'"></input>';
+					$('.showimg').html(img);
+					$("#addimage").val('');
+					progress.hide();
+					
+				}, 
+				error:function(xhr){ //上传失败 
+					//console.log(xhr.status)
+				} 
+			}); 
+		}); 
+	}); 
+	
+	
+	$(function () { 
+		var progress = $(".img"); 
+		var bar = $('.bar') ;
+		var percent = $('.percent'); 
+		var progress = $('.progress');
+		$("#editimage").wrap("<form id='myupload1' action='{:U('/Admin/Job/addImage')}' method='post' enctype='multipart/form-data'></form>"); 
+		$("#editimage").change(function(){ //选择文件 
+			$("#myupload1").ajaxSubmit({ 
+				dataType:  'json', //数据格式为json 
+				beforeSend: function() { //开始上传 
+					progress.show(); //显示进度条
+					var percentVal = '0%';
+					bar.width(percentVal);
+					percent.html(percentVal);	
+				}, 
+				uploadProgress: function(event, position, total, percentComplete) { 
+					var percentVal = percentComplete + '%'; //获得进度 
+					bar.width(percentVal); //上传进度条宽度变宽 
+					percent.html(percentVal); //显示上传进度百分比 
+				}, 
+				success: function(data) { //成功 
+					var img = '<img src="'+data[0]["savepath"].substr(1)+data[0]["savename"]+'" width="80" height="56" style="margin-top:-28px;"><input type="hidden" name="pic" id="editpic" value="'+data[0]["savepath"].substr(1)+data[0]["savename"]+'"></input>';
+					$('.showimgedit').html(img);
+					$("#editimage").val('');
+					progress.hide();
+				}, 
+				error:function(xhr){ //上传失败 
+					//console.log(xhr.status)
+				} 
+			}); 
+		}); 
+	}); 
+	
+	
+	
+</script> 
+<script>
+
+</script> 
+
+<!--添加分类--> 
+
+<script type="text/javascript">
+    $(".BtnAddClass").click(function(){
+        $('.addfenlei').show();
+        $('#albums-overlay').show();
+    })
+</script> 
+<script type="text/javascript">
+    $("#addcategory").click(function(){
+        var classname = $('.classname').val();  //分类名称
+		    var fid = $('#fid').val();
+		    var pic = $('#addpic').val();  //父分类id
+        var sort = $('.sort').val();           //排序
+
+
+        if (classname == '') {
+            alert("分类名称必填！");
+            return false;
+        }
+		
+        $.ajax({
+            url: "{:U('/Admin/Job/addCategory')}",
+            type: "post",
+            dataType: "json",
+            data: {
+                classname: classname,
+				fid: fid,
+				pic: pic,
+                sort: sort
+            }
+        }).done(function (g) {
+            if (g.status == 1) {
+                alert(g.info);
+                window.location.href = "{:U('/Admin/Job/category')}";
+            } else {
+                alert(g.info);
+            }
+
+        })
+    })
+</script> 
+<!--添加分类end--> 
+
+<!--修改分类--> 
+<script type="text/javascript">
+    var categoryid;
+    $(".j-editClass").click(function(){
+      $('.editfenlei').show();
+      $('#albums-overlay').show();
+      var word=$(this).attr('data-word');
+      var id=$(this).attr('data-id');
+      var status=$(this).attr('data-status');
+        
+      $('#word').val(word);
+      $('#id').val(id);
+      $('#status').val(status);
+		
+    })
+
+    $("#editcategory").click(function(){
+        var word = $('#word').val();  //分类名称
+		var id = $('#id').val();  //分类名称
+        var status = $('#status').val();        //排序
+
+//alert(categoryid);
+        if (word == '') {
+            alert("敏感词汇必填！");
+            return false;
+        }
+        $.ajax({
+            url: "{:U('/Admin/System/editmingan')}",
+            type: "post",
+            dataType: "json",
+            data: {
+                id: id,
+                status: status,
+                word:word
+            }
+        }).done(function (g) {
+            if (g.status == 1) {
+                alert(g.info);
+                window.location.reload();
+            } else {
+                alert(g.info);
+            }
+
+        })
+    })
+</script> 
+<!--修改分类end-->

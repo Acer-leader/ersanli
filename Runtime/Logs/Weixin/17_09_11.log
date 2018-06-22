@@ -1,0 +1,20 @@
+[ 2017-09-11T09:17:51+08:00 ] 119.147.207.152 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000324s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000402s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000443s ]
+NOTIC: [2] session_start(): open(/temp\sess_6l3pfrfslqqsb035bch8df4acn, O_RDWR) failed: No such file or directory (2) E:\ersanli\ThinkPHP\Common\functions.php 第 1263 行.
+NOTIC: [2] session_start(): Failed to read session data: files (path: /temp) E:\ersanli\ThinkPHP\Common\functions.php 第 1263 行.
+
+[ 2017-09-11T09:18:00+08:00 ] 101.226.89.122 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000340s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000401s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000435s ]
+NOTIC: [2] session_start(): open(/temp\sess_oj1u2f51fon79u3g82ot8a3eva, O_RDWR) failed: No such file or directory (2) E:\ersanli\ThinkPHP\Common\functions.php 第 1263 行.
+NOTIC: [2] session_start(): Failed to read session data: files (path: /temp) E:\ersanli\ThinkPHP\Common\functions.php 第 1263 行.
+

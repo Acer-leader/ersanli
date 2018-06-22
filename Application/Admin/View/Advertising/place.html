@@ -1,0 +1,209 @@
+<include file="Public:head"/>
+<div class="container">
+  <div class="inner clearfix"> <include file="Public:left" />
+    <div class="content-right fl">
+      <h1 class="content-right-title">广告位置列表</h1>
+      <div class="alert alert-info disable-del"> 
+      目前拥有
+      <span style="font-size:16px;">{$lists|count}</span>个广告位置。
+      <a href="javascript:;" class="alert-delete" title="隐藏"><i class="gicon-remove"></i></a> </div>
+      <div class="tablesWrap">
+        <div class="tables-searchbox">
+          <div class="fl">
+          <a href="javascript:;" class="btn btn-success fl BtnAddClass">添加位置</a>
+          </div>
+        </div>
+        <!-- end tables-searchbox -->
+        <table class="wxtables" style="text-align:center;">
+          <colgroup>
+          <col width="6%">
+          <col width="16%">
+          <col width="8%">
+          <col width="8%">
+          <col width="14%">
+          <col width="15%">
+          </colgroup>
+          <thead>
+            <tr>
+              <td>ID</td>
+              <td>位置</td>
+              <td>排序</td>
+              <td>状态</td>
+              <td>创建时间</td>
+              <td>操作</td>
+            </tr>
+          </thead>
+          <tbody>
+            <foreach name="lists" item="vo">
+              <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.title}</td>
+                <td>{$vo.sorts}</td>
+                <td class="status">
+                  <switch name="vo.status">
+                    <case value="0">
+                      <p style='color:red;'>关闭</p>
+                    </case>
+                    <case value="1">
+                      <p style='color:green;'>启用</p>
+                    </case>
+                  </switch></td>
+                <td>{$vo.create_at}</td>
+                <td>
+                    <a href="JavaScript:void(0);" class='btn J-editInfo btn-success' data-info='{$vo.info}' title="编辑">编辑</a>
+                    <a href="JavaScript:void(0);" class='btn j-delClass btn-warning' data-id="{$vo.id}">删除</a>
+                    <switch name="vo.status">
+                      <case value="0"> <a href="JavaScript:void(0);" class="btn btn-success changeStatus" data-status="{$list.status}" data-id="{$vo.id}">启用</a> </case>
+                      <case value="1"> <a href="JavaScript:void(0);" class="btn btn-warning changeStatus" data-status="{$list.status}" data-id="{$vo.id}">关闭</a> </case>
+                    </switch>
+                </td>
+              </tr>
+            </foreach>
+          </tbody>
+        </table>
+        <!-- end wxtables -->
+        <div class="tables-btmctrl clearfix">
+          <div class="fl">
+            <div class="pages" style="width:100%;margin-left:0px;"> {$page} </div>
+            <!-- end paginate -->
+          </div>
+        </div>
+        <!-- end tables-btmctrl -->
+      </div>
+      <!-- end tablesWrap -->
+    </div>
+    <!-- end content-right -->
+  </div>
+</div>
+<include file="Public:foot"/>
+<div id="albums-overlay" class="disshow"></div>
+<div class="jbox addfenlei disshow" style="height:auto;">
+  <div class="jbox-title">
+    <div class="jbox-title-txt">添加位置</div>
+    <a href="javascript:;" class="jbox-close cancle"></a></div>
+  <div class="jbox-container" style="height: auto;">
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed"></span>位置名字：</label>
+      <div class="form-controls">
+        <label>
+          <input type="text" class="input" name="title" value="" placeholder="广告位置的名字">
+          <span class="red">*必填</span> </label>
+        <span class="fi-help-text"></span> </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed"></span>排序：</label>
+      <div class="form-controls">
+        <label>
+          <input type="text" name="sorts" value="0" class="input" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+          <span class="red">*必填</span> </label>
+        <span class="fi-help-text"></span></div>
+    </div>
+  </div>
+  <div class="jbox-buttons">
+  <a href="javascript:void(0);" class="jbox-buttons-ok btn btn-primary" id="examine">确定</a>
+  <a href="javascript:void(0);" class="jbox-buttons-ok btn cancle">取消</a></div>
+</div>
+<script type="text/javascript" src="__JS__/jquery-form.js"></script>
+<script type="text/javascript">
+$(".cancle").click(function(){
+    $(this).parent().parent('.jbox').hide();
+    $('#albums-overlay').hide();
+    window.location.reload();
+})
+</script>
+<!--添加部分-->
+<script type="text/javascript">
+var id=0;
+$(".BtnAddClass").click(function(){
+    $('.addfenlei').show();
+    $('#albums-overlay').show();
+})
+<!--添加部分-->
+<!--修改部分-->
+$(".J-editInfo").click(function(){
+    var info = JSON.parse($.trim($(this).attr("data-info")));
+    if(info.id < 1){
+        dialog.showTips('错误的编辑','warn');return false;
+    }
+    id = info.id;
+    $(".jbox-title-txt").html('修改位置');
+    $(".addfenlei input[name=title]").val(info.title);
+    $(".addfenlei input[name=sorts]").val(info.sorts)
+    $('.addfenlei').show();
+    $('#albums-overlay').show();
+})
+<!--修改部分-->
+$("#examine").click(function(){
+    var title = $.trim($(".addfenlei input[name=title]").val());
+    var sorts     = parseInt($(".addfenlei input[name=sorts]").val());
+    if(!title){
+        dialog.showTips('请填写位置','warn');return false;
+    }
+    var data = {action:'addEdit',id:id,title:title,sorts:sorts}
+    $.post("{:U('Admin/Advertising/placeAddEditDelStatus')}",data,function(g){
+        if(g.status==1){
+            dialog.showTips(g.info,'',1);return false;
+        }else{
+            dialog.showTips(g.info,'warn');return false;
+        }
+    },"json");
+})
+</script>
+<!--添加分类end-->
+<!--修改状态-->
+<script>
+$(".changeStatus").click(function()
+{   //是否显示隐藏
+    var id = $(this).attr("data-id");
+    if(!id){
+        dialog.showTips('错误的请求','warn');return false;
+    }
+    var _this = $(this);
+    $.post("{:U('Admin/Advertising/placeAddEditDelStatus')}",{action:'changeStatus',id:id},function(data){
+        if(data.status == 1){
+            var p = _this.parents('tr').find(".status p");
+            p.html(data.text);
+            _this.attr('data-status',data.status);
+            if(_this.hasClass("btn-success")){
+                _this.removeClass("btn-success").addClass("btn-warning").html("关闭");
+                p.css("color","green");
+            }else{
+                _this.removeClass("btn-warning").addClass("btn-success").html("启用");
+                p.css("color","red");
+            }
+            //window.location.reload();   //刷新当前页面.
+        }else{
+            alert("修改失败");
+        }
+    },"json")
+})
+<!--修改状态-->
+</script>
+<!--删除分类 1-->
+<script>
+$(".j-delClass").click(function(){   //是否开始结束
+    var id = $(this).attr("data-id");
+    if(id > 0){
+        if(confirm('确定要删除吗？')){
+            $.ajax({
+                url: "{:U('Admin/Advertising/placeAddEditDelStatus')}",
+                type: "post",
+                dataType: "json",
+                data: {
+                    action:'Del',
+                    id: id,
+                }
+            }).done(function (res) {
+                if (res.status == 1) {
+                    dialog.showTips(res.info,"",1); return false;
+                } else {
+                    dialog.showTips(res.info,"warn"); return false;
+                }
+            })
+        }
+    }else{
+        dialog.showTips('错误的请求','warn');return false;
+    }
+});
+</script>
+<!--删除分类 2-->

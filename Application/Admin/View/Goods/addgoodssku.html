@@ -1,0 +1,70 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="__CSS__//lists.css">
+
+<div class="container">
+<div class="inner clearfix"> <include file="Public:left"/>
+  <!-- end content-left -->
+
+    
+    <div class="content-right fl">
+      <h1 class="content-right-title">添加sku</h1>
+        <form aciton="{:U('/Admin/Goodssku/add')}" enctype="multipart/form-data" method="post" id="add_step2" onsubmit="return toVaild()">
+        <!-- end 基本信息 -->
+        <div class="panel-single panel-single-light mgt20">
+        <h3 class="cst_h3 mgb20">sku信息</h3>
+        <div class="formitems">
+          <label class="fi-name">上级sku：</label>
+            <div class="form-controls">
+              <select name="pid" style="padding:5px;border: 1px solid #ccc;width:182px" id="fid">
+                <option value="0">--顶级sku--</option>
+                <foreach name="list" item="vo" >
+                    <if condition="$vo['id'] eq  $info['id']">
+                      <else /> 
+                      <option value="{$vo.id}" <if condition="$vo['id'] eq  $info['pid']">selected="selected"<else /></if> >{$vo.classname}</option>
+                    </if>
+                </foreach>
+              </select>
+              <input type="hidden" value="{$info.id}" name="id" id="class_id">
+              <input type="hidden" value="{$storeid}" name="storeid" id="class_id">
+              <span class="fi-help-text error"></span> </div>
+          </div>
+          <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>sku名称：</label>
+            <div class="form-controls">
+              <input type="text" class="input xxlarge" name="classname" value="{$info.classname}" placeholder="sku名称" style="width:200px">
+              <span class="fi-help-text"></span> </div>
+          </div>
+          
+          <div class="formitems">
+            <label class="fi-name">分类排序：</label>
+            <div class="form-controls">
+              <input type="text" class="input" name="sort" value="{$info.sort}" placeholder="分类排序" style="width:200px">
+              <span class="fi-help-text"></span> </div>
+          </div>
+        
+        <!-- end 详情及其它 -->
+        <div class="panel-single panel-single-light mgt20 txtCenter">
+          <a href="javascript:;" onclick="javascript:history.back(-1);" class="btn btn-success">返回</a>
+          <input type="submit" class="btn btn-primary" value="保存">
+        </div>
+      </form>
+    </div>
+    <!-- end content-right --> 
+  </div>
+</div>
+</div>
+<!-- end container -->
+<include file="Public:foot"/>
+<script>
+function toVaild(){
+
+  var classname=$('.xxlarge').val();
+    if(classname==''||classname==null){
+        alert('请填写sku名称！');
+        return false;
+    }
+
+
+}
+
+</script>

@@ -1,0 +1,10 @@
+[ 2017-09-09T19:38:39+08:00 ] 125.119.249.174 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000017s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003365s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000467s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000504s ]
+NOTIC: [2] session_start(): open(/temp\sess_6jhh679sp37ntt37vc2tp9seeb, O_RDWR) failed: No such file or directory (2) E:\ersanli\ThinkPHP\Common\functions.php 第 1263 行.
+NOTIC: [2] session_start(): Failed to read session data: files (path: /temp) E:\ersanli\ThinkPHP\Common\functions.php 第 1263 行.
+

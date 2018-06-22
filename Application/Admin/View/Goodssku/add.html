@@ -1,0 +1,167 @@
+<include file="Public:head"/>
+<style>
+.imgnav {
+    max-height: 30px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.imgwrapper {
+    display: block;
+    width: 78px;
+    height: 78px;
+    overflow: hidden;
+}
+.imgwrapper img {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+.spanpd10 {
+    margin: 10px;
+}
+.wxtables.wxtables-sku.newtable {
+    width: 40%;
+    margin: 0;
+}
+.img-list li {
+    width: 60px;
+    height: 60px;
+}
+.cst_h3 span {
+    font-weight: normal;
+}
+#imgdiv img {
+    max-width: 190px;
+    max-height: 190px;
+    display: none;
+    margin: 5px;
+}
+.btnimage {
+    width: 80px;
+    height: 30px;
+    background: white;
+    border: 1px solid #d9d9d9;
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+    line-height: 31px;
+}
+.file {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: 80px;
+    height: 30px;
+    background: white;
+    border: 1px solid #d9d9d9;
+    cursor: pointer;
+    opacity: 0
+}
+#imgdiv2 img {
+    max-width: 88px;
+    max-height: 88px;
+    display: none;
+    margin: 5px;
+}
+#xuanze2 {
+    width: 60px;
+    height: 30px;
+    background: white;
+    border: 1px solid #d9d9d9;
+}
+#xuanze2:hover {
+    background: #E6E6E6;
+}
+.huase {
+    display: none;
+    width: 86px;
+    height: 30px;
+    margin: 5px;
+    text-indent: 5px;
+}
+</style>
+<div class="container">
+  <div class="inner clearfix"> <include file="Public:left"/> 
+    <!-- end content-left -->
+    
+    <div class="content-right fl">
+      <h1 class="content-right-title">添加sku</h1>
+        <form aciton="{:U('/Admin/Goodssku/add')}" enctype="multipart/form-data" method="post" id="add_step2" onsubmit="return toVaild()">
+        <!-- end 基本信息 -->
+        <div class="panel-single panel-single-light mgt20">
+        <h3 class="cst_h3 mgb20">sku信息</h3>
+        <div class="formitems">
+          <label class="fi-name">上级sku：</label>
+            <div class="form-controls">
+              <select name="pid" style="padding:5px;border: 1px solid #ccc;width:182px" id="fid">
+                <option value="0">--顶级sku--</option>
+                <foreach name="list" item="vo" >
+                    <if condition="$vo['id'] eq  $info['id']">
+                      <else /> 
+                      <option value="{$vo.id}" <if condition="$vo['id'] eq  $info['pid']">selected="selected"<else /></if> >{$vo.classname}</option>
+                    </if>
+                </foreach>
+              </select>
+              <input type="hidden" value="{$info.id}" name="id" id="class_id">
+              <span class="fi-help-text error"></span> </div>
+          </div>
+          <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>sku名称：</label>
+            <div class="form-controls">
+              <input type="text" class="input xxlarge" name="classname" value="{$info.classname}" placeholder="sku名称" style="width:200px">
+              <span class="fi-help-text"></span> </div>
+          </div>
+          
+          <div class="formitems">
+            <label class="fi-name">分类排序：</label>
+            <div class="form-controls">
+              <input type="text" class="input" name="sort" value="{$info.sort}" placeholder="分类排序" style="width:200px">
+              <span class="fi-help-text"></span> </div>
+          </div>
+        
+        <!-- end 详情及其它 -->
+        <div class="panel-single panel-single-light mgt20 txtCenter">
+          <a href="javascript:;" onclick="javascript:history.back(-1);" class="btn btn-success">返回</a>
+          <input type="submit" class="btn btn-primary" value="保存">
+        </div>
+      </form>
+    </div>
+    <!-- end content-right --> 
+  </div>
+</div>
+<!-- end container --> 
+
+<include file="Public:foot"/>
+
+
+</script> 
+<!--选择分类-end->
+<!--提交表单前验证--> 
+<script type="text/javascript">
+
+
+function toVaild(){
+
+  var classname=$('.xxlarge').val();
+    if(classname==''||classname==null){
+        alert('请填写sku名称！');
+        return false;
+    }
+
+
+}
+</script> 
+<!--提交表单前验证end--> 
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+<div class="content-left fl">
+  <dl class="left-menu shop_3 sub_tags">
+    <foreach name="node_left_list" item="v">
+    <dt> <i class="icon-menu tags"></i> <span id="shop_3" data-id="3">{$v['classname']}</span> </dt>
+      <foreach name="v['nodes']" item="vv">
+      <dd class="subshop_0 <eq name='left_urlname' value='$vv[controller_action]'>active</eq> "> <a href="{:U('/Admin/'.$vv[controller].'/'.$vv[action])}">{$vv['classname']}</a> </dd>
+      </foreach>
+    </foreach>
+  </dl>
+</div>

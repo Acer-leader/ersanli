@@ -1,0 +1,312 @@
+<include file="Public:head"/>
+<style>
+.btn-success {
+    margin-top: 12px;
+}
+.access-padding {
+    padding: 3px;
+}
+.access-padding div {
+    float: left;
+    margin-right: 5px;
+}
+.access-padding a:hover {
+    color: red;
+}
+</style>
+<div class="container">
+  <div class="inner clearfix"> <include file="Public:left" />
+    <div class="content-right fl">
+      <h1 class="content-right-title">权限配置</h1>
+      <form action="" method="post">
+        <div class="clearfix"> <a href="javascript:;" class="btn btn-success fl add-node">添加顶部导航</a> </div>
+      </form>
+      <table class="wxtables">
+        <colgroup>
+        <col width="100%">
+        </colgroup>
+        <tbody>
+          <foreach name="cache" item="v1">
+            <tr>
+              <td class="access-padding level-1" style="background-color: #58A0D3;">
+                <span style="font-size: 80%;color:#FFF">
+                    [头部导航]</span> <b>{$v1.classname} </b> 
+                    [<a class="add-node" href="##" data-id="{$v1.id}" data-classname="{$v1.classname}" data-pid="{$v1.pid}" data-level="{$v1.level}">创建子节点</a> 
+                    <a class="edit-node" href="##" data-id="{$v1.id}" data-controller="{$v1.controller}" data-action="{$v1.action}" data-classname="{$v1.classname}" data-pid="{$v1.pid}" data-level="{$v1.level}" data-sort="{$v1.sorts}">修改</a> 
+                    <if condition="$v1['id'] gt 1"><a href="javascript:;" onclick="delNode({$v1['id']})">删除</a></if>
+                    ] </td>
+            </tr>
+            <foreach name="v1['nodes']" item="v2">
+              <tr>
+                <td class="access-padding  level-2" style="background-color:#D9D9D9;">
+                    &nbsp;&nbsp;<span style="font-size: 80%;color:#999">[左侧标签]</span> {$v2.classname}
+                  [<a class="add-node" href="##" data-id="{$v2.id}" data-classname="{$v2.classname}" data-pid="{$v2.pid}" data-level="{$v2.level}">创建子节点</a>
+                  <a class="edit-node" href="##" data-id="{$v2.id}" data-controller="{$v2.controller}" data-action="{$v2.action}" data-classname="{$v2.classname}" data-pid="{$v2.pid}" data-level="{$v2.level}" data-sort="{$v2.sorts}">修改</a>
+                  <if condition="$v2['pid'] gt 1"><a href="javascript:;" onclick="delNode({$v2['id']})">删除</a></if>
+                  ] </td>
+              </tr>
+              <foreach name="v2['nodes']" item="v3" key="k">
+                <tr>
+                  <td class="access-padding  level-3">
+                  &nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 80%;color:#999">[左侧导航]</span> {$v3.classname}
+                    [<a class="add-node" href="##" data-id="{$v3.id}" data-classname="{$v3.classname}" data-pid="{$v3.pid}" data-level="{$v3.level}">创建子节点</a>
+                    <a class="edit-node" href="##" data-id="{$v3.id}" data-controller="{$v3.controller}" data-action="{$v3.action}" data-classname="{$v3.classname}" data-pid="{$v3.pid}" data-level="{$v3.level}" data-sort="{$v3.sorts}">修改</a>
+                    <if condition="$v3['pid2'] gt 1"><a href="javascript:;" onclick="delNode({$v3['id']})">删除</a></if>
+                    ] </td>
+                </tr>
+                <?php
+                        if($v3["nodes"]){?>
+                <tr>
+                  <td class="access-padding  level-4">
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 80%;color:#999">[内容节点]</span></div>
+                    <?php
+                        foreach($v3["nodes"] as $v4){?>
+                    <div> <?php echo $v4['classname']?> 
+                        [<a class="edit-node" href="##" data-id="<?php echo $v4['id']?>" data-controller="<?php echo $v4['controller']?>" data-action="<?php echo $v4['action']?>" data-classname="<?php echo $v4['classname']?>" data-pid="<?php echo $v4['pid']?>" data-level="<?php echo $v4['level']?>" data-sort="<?php echo $v4['sorts']?>">修改</a> 
+                        <if condition="$v4['pid3'] gt 1"><a href="javascript:;" onclick="delNode(<?php echo $v4['id']?>)">删除</a></if>
+                        ] </div>
+                    <?php  }?></td>
+                </tr>
+                <?php  }?>
+              </foreach>
+            </foreach>
+          </foreach>
+        </tbody>
+      </table>
+      <div class="tables-btmctrl clearfix"> </div>
+    </div>
+  </div>
+</div>
+<!-- end container --> 
+<include file="Public:foot"/> 
+
+<!--=======================添加节点 1===============================-->
+<div id="albums-overlay" class="disshow"></div>
+<div class="jbox addfenlei disshow" style="height:auto;">
+  <div class="jbox-title">
+    <div class="jbox-title-txt">添加节点</div>
+    <a href="javascript:;" class="jbox-close cancle"></a></div>
+  <input type="hidden" class="input pid">
+  <div class="jbox-container" style="height: auto;">
+    <!--div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>父节点：</label>
+      <div class="form-controls">
+        <input type="text" class="input f-node" readonly >
+        <span class="fi-help-text"></span> </div>
+    </div-->
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>节点名称：</label>
+      <div class="form-controls">
+        <input type="text" class="input classname" name="classname" >
+        <span class="fi-help-text"></span> </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>控制器名：</label>
+      <div class="form-controls">
+        <input type="text" class="input controller" name="controller" >
+        <span class="fi-help-text"></span> </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>方法名：</label>
+      <div class="form-controls">
+        <input type="text" class="input action" name="action" >
+        <span class="fi-help-text"></span> </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>排序</label>
+      <div class="form-controls">
+        <input type="text" class="input sort" name="sort" value="0">
+        <span class="fi-help-text"></span> </div>
+    </div>
+  </div>
+  <div class="jbox-buttons"><a href="javascript:void(0);" class="jbox-buttons-ok btn btn-primary" id="addcategory">确定</a><a
+            href="javascript:void (0);" class="jbox-buttons-ok btn cancle">取消</a></div>
+</div>
+<!--=======================添加节点 2===============================--> 
+
+<!--=======================修改节点 1===============================-->
+<div class="jbox editfenlei disshow" style="height:auto">
+  <div class="jbox-title">
+    <div class="jbox-title-txt">修改节点</div>
+    <input type="hidden" class="id">
+    <a href="javascript:;" class="jbox-close cancle"></a></div>
+  <div class="jbox-container" style="height: auto;">
+    <!--div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>父节点：</label>
+      <div class="form-controls">
+        <input type="text" class="input f-node" readonly >
+        <span class="fi-help-text"></span> </div>
+    </div-->
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>节点名称：</label>
+      <div class="form-controls">
+        <input type="text" class="input classname" name="classname" >
+        <span class="fi-help-text"></span> </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>控制器名：</label>
+      <div class="form-controls">
+        <input type="text" class="input controller" name="controller" >
+        <span class="fi-help-text"></span> </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>方法名：</label>
+      <div class="form-controls">
+        <input type="text" class="input action" name="action" >
+        <span class="fi-help-text"></span> </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed">*</span>排序</label>
+      <div class="form-controls">
+        <input type="text" class="input sort" name="sort" >
+        <span class="fi-help-text"></span> </div>
+    </div>
+  </div>
+  <div class="jbox-buttons"><a href="javascript:void(0);" class="jbox-buttons-ok btn btn-primary" id="editcategory">确定</a><a
+            href="javascript:;" class="jbox-buttons-ok btn cancle">取消</a></div>
+</div>
+<!--=======================修改节点 2===============================--> 
+
+<!--=======================添加节点 1===============================--> 
+<script type="text/javascript">
+    $(".cancle").click(function(){
+        $(this).parent().parent('.jbox').hide();
+        $('#albums-overlay').hide();
+    })
+    $(".add-node").click(function(){
+        var pid = $(this).attr("data-id");
+        $(".addfenlei .pid").val(pid);
+        $('.addfenlei .classname').val("");
+        $('.addfenlei .sort').val("0");
+        $('.addfenlei .controller').val("");
+        $('.addfenlei .action').val("");
+        $('.addfenlei').show();
+        $('#albums-overlay').show();
+    })
+    $(".edit-node").click(function(){
+        var id         = $(this).attr("data-id");
+        var classname  = $(this).attr("data-classname")
+        var sort       = $(this).attr("data-sort")
+        var controller = $(this).attr("data-controller")
+        var action     = $(this).attr("data-action")
+        $('.editfenlei .id').val(id);
+        $('.editfenlei .classname').val(classname);
+        $('.editfenlei .sort').val(sort);
+        $('.editfenlei .controller').val(controller);
+        $('.editfenlei .action').val(action);
+
+        $('.editfenlei').show();
+        $('#albums-overlay').show();
+    })
+
+    $("#addcategory").click(function(){
+        var post        = {};
+        post.pid        = $('.addfenlei .pid').val();
+        post.classname  = $('.addfenlei .classname').val();
+        post.sort       = $('.addfenlei .sort').val();
+        post.controller = $('.addfenlei .controller').val();
+        post.action     = $('.addfenlei .action').val();
+
+        if (post.classname == '') {
+            alert("节点名称不能为空！");
+            $('.username').focus();
+            return false;
+        }
+        if (post.controller == '') {
+            alert("控制器名不能为空！");
+            $('.password').focus();
+            return false;
+        }
+        if (post.action == '') {
+            alert("方法名不能为空！");
+            $('.password').focus();
+            return false;
+        }
+
+        $.ajax({
+            url: "{:U('/Admin/System/addNode')}",
+            type: "post",
+            dataType: "json",
+            data: post
+        }).done(function (g) {
+            if (g.status == 1) {
+                alert(g.info);
+                window.location.reload();
+            } else {
+                alert(g.info);
+            }
+        })
+    })
+</script> 
+<!--=======================添加节点 2===============================--> 
+
+<!--=======================修改节点 1===============================--> 
+<script type="text/javascript">
+    $("#editcategory").click(function(){
+        var post        = {};
+        post.id         = $('.editfenlei .id').val();
+        post.classname  = $('.editfenlei .classname').val();
+        post.sort       = $('.editfenlei .sort').val();
+        post.controller = $('.editfenlei .controller').val();
+        post.action     = $('.editfenlei .action').val();
+        if (post.classname == '') {
+            alert("节点名称不能为空！");
+            $('.username').focus();
+            return false;
+        }
+        if (post.controller == '') {
+            alert("控制器名不能为空！");
+            $('.password').focus();
+            return false;
+        }
+        if (post.action == '') {
+            alert("方法名不能为空！");
+            $('.password').focus();
+            return false;
+        }
+        $.ajax({
+            url: "{:U('/Admin/System/editNode')}",
+            type: "post",
+            dataType: "json",
+            data: post
+        }).done(function (g) {
+            dialog.showTips(g.info,"",1); return false;
+        })
+    })
+
+    $('.j-able').click(function(){
+        var id = $(this).attr("data-id");
+        var able = $(this).attr("data-able");
+        $.ajax({
+            url: "{:U('/Admin/System/ableAdmin')}",
+            type: "post",
+            dataType: "json",
+            data: {
+                id: id,
+                able: able
+            }
+        }).done(function (g) {
+            dialog.showTips(g.info,"",1); return false;
+        })
+    })
+</script> 
+<!--=======================修改节点 2===============================--> 
+
+<!--=======================删除节点 1===============================--> 
+<script>
+    function delNode(id){
+        if(status == 1){return false;}
+        dialog.showTips("确定删除该节点！","firm",function (){
+            status = 1;
+            $.post("{:U('/Admin/system/delNode')}", {id:id}, function (data){
+                if(data.status){
+                    dialog.showTips(data.info,"",1); return false;
+                }else{
+                    dialog.showTips(data.info,"",1); return false;
+                }
+                status = 0;
+            },"json");
+        });
+    }
+</script> 
+<!--=======================删除节点 2===============================--> 

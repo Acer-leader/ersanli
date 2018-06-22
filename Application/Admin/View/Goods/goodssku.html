@@ -1,0 +1,171 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="__CSS__//lists.css">
+
+<div class="container">
+<div class="inner clearfix"> <include file="Public:left"/>
+  <!-- end content-left -->
+
+  <div class="content-right fl">
+    <h1 class="content-right-title">列表</h1>
+    <a href="{:U('/Admin/Goods/addgoodssku')}" class="btn btn-success">添加sku</a>
+    <!-- <form action="{:U('/Admin/Goods/goodssku')}" method="post">
+      <div class="tables-searchbox newcearchbox">
+        <input type="text" placeholder="sku名称" class="input" name="title" value="{$title}" >
+        <button class="btn btn-primary" style="line-height:26px;"> <i class="gicon-search white"></i>查询 </button>
+      </div>
+    </form> -->
+    <!-- end tabs -->
+
+     <table class="wxtables mgt10" style="text-align:center;">
+      <colgroup>
+      <col width="2%">
+      <col width="5%">
+      <col width="10%">
+      <col width="10%">
+      <!-- <col width="10%"> -->
+      <col width="5%">
+      <col width="5%">
+      <col width="15%">
+      </colgroup>
+      <thead>
+        <tr class="po_list">
+          <td><i class="icon_check"></i></td>
+          <td>ID</td>
+          <td>名称</td>
+          <td>排序</td>
+          <td>时间</td>
+          <td>删除</td>
+          <td>操作</td>
+        </tr>
+      </thead>
+      <tbody>
+        <foreach name="list" item="vo">
+          <tr>
+            <td><input type="checkbox" class="checkbox table-ckbs" data-id="{$vo['id']}"></td>
+            <td>{$vo.id}</td>
+            <td>
+              <if condition="$vo['pid'] eq 0 ">
+                  {$vo.classname}
+                <else /> 
+                  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp |-{$vo.classname}
+              </if>
+            
+            </td>
+            <td>{$vo.sort} </td>
+            <td>{$vo.time} </td>
+            <if condition="($vo.isdel eq 1)"><td id="isdel" style="color:red">删除</td><else/><td id="isdel">正常</td></if>
+            <td>
+              <a href="{:U('/Admin/Goods/addgoodssku/id')}/{$vo.id}" class="btn btn-primary j-editClass">编辑</a>
+              <a href="javascript:;" class="btn j-delClass btn-warning" title="删除" data-id="{$vo.id}" style="margin-left:5px;"><if condition="($vo.isdel eq 0)">删除<else/>删除恢复</if></a>
+              </td>
+          </tr>
+        </foreach>
+      </tbody>
+    </table>
+    <!-- end wxtables -->
+    <div class="tables-btmctrl clearfix">
+      <div class="fl">
+        <a href="javascript:;" class="btn btn-primary btn_table_selectAll">全选</a>
+        <a href="javascript:;" class="btn btn-primary btn_table_Cancle">取消</a>
+        <a href="javascript:;" class="btn btn-primary btn_table_delAll">删除</a>
+        </div>
+        <div class="" style="padding-left:250px;">
+           <div class="pages"> {$page} </div>
+        </div>
+      <!-- end tables-btmctrl -->
+    </div>
+    
+    <!-- end content-right -->
+  </div>
+</div>
+<!-- end container -->
+<include file="Public:foot"/>
+<script>
+$(".change-status").click(function (){
+  var _this= $(this)
+  var id   = $(this).attr("data-id");
+  var item = $(this).attr("data-item");
+  $.post("{:U('Admin/Pointsmall/changeStatus')}", {id:id,item:item}, function(data){
+    if(data.status == 1){
+      _this.css({color:"#0C0"}).html("√");
+    }else if(data.status == 2){
+      _this.css({color:"#c00"}).html("×");
+    }else{
+      alert(data.info);
+    }
+  }, "json")
+})
+$(".change-all-status").click(function (){
+  if(!confirm("确定改变所有选中产品的状态？")){
+    return false;
+  }
+  var ids = "";
+  var item = $(this).attr("data-item");
+  $(".table-ckbs:checked").each(function(i){
+    ids += $(this).attr("data-id")+"-"
+  })
+  if(!ids){
+    alert("请选择产品！");return false;
+  }
+  $.post("{:U('Admin/Pointsmall/changeAllStatus')}" ,{ids:ids,item:item}, function (data){
+    if(data.status){
+      window.location.reload();
+    }else{
+      alert(data.info);
+    }
+  })
+})
+$(".btn_table_delAll").click(function(){
+  if(!confirm("确定删除所有选中的产品？")){
+    return false;
+  }
+  var ids = "";
+  $(".table-ckbs:checked").each(function(i){
+    ids += $(this).attr("data-id")+"-"
+  })
+  if(!ids){
+    alert("请选择产品！");return false;
+  }
+  $.post("{:U('Admin/Goods/skudelall')}" ,{ids:ids}, function (data){
+    if(data == 1){
+      window.location.reload();
+    }
+  })
+})
+</script>
+<script>
+
+//删除S
+$(".j-delClass").click(function(){   //是否开始结束
+    var id = $(this).attr("data-id");
+    var thiss = $(this);
+    if(id > 0){
+        if(confirm('确定要删除吗？')){
+            $.ajax({
+                url: "{:U('Admin/Goods/skudel')}",
+                type: "post",
+                dataType: "json",
+                data: {
+                    // action:'del',
+                    id: id,
+                }
+            }).done(function (res) {
+                if (res.status == 1) {
+                    if (res.is == 1) {
+                      thiss.parent().prev().attr('style','color:red').html('删除');
+                      thiss.html('删除恢复');
+                    }else{
+                      thiss.parent().prev().attr('style','').html('正常');
+                      thiss.html('删除');
+                    }
+                } else {
+                    alert('修改错误');
+                }
+            })
+        }
+    }else{
+        dialog.showTips('错误的请求','warn');return false;
+    }
+});
+
+</script>

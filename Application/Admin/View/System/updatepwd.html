@@ -1,0 +1,49 @@
+<include file="Public:head"/>
+<div class="container">
+  <div class="inner clearfix">
+  <include file="Public:systemleft" />
+    <!-- end content-left -->
+    
+    <div class="content-right fl">
+      <h1 class="content-right-title">修改密码</h1>
+      <form action="" method="POST" name="form" onsubmit="return tijiao()">
+        <div class="formitems">
+          <label class="fi-name"><span class="colorRed">*</span>新密码：</label>
+          <div class="form-controls">
+            <input type="password" class="input" name="password" value="">
+            <span class="fi-help-text">密码不能少于6位数！</span> </div>
+        </div>
+        <div class="formitems">
+          <label class="fi-name"><span class="colorRed">*</span>重复密码：</label>
+          <div class="form-controls">
+            <input type="password" class="input" name="repass" value="">
+            <span class="fi-help-text"></span> </div>
+        </div>
+        <div class="mgl120">
+          <input type="submit" class="btn btn-primary" name="st" value="保存">
+        </div>
+      </form>
+    </div>
+    <!-- end content-right --> 
+  </div>
+</div>
+<script>
+function tijiao(){
+	var psd=form.password.value;
+	var psd1=form.repass.value;
+	if(psd ==''){
+		alert('密码不能为空！');
+		form.password.focus();
+		return false;
+	}
+	if(psd1 != psd){
+		alert('两次密码输入不一致！');
+		form.repass.focus();
+		return false;
+	}
+	return true;
+	}
+</script>
+<!-- end container --> 
+<include file="Public:foot"/>
+<!--gonggao--> 

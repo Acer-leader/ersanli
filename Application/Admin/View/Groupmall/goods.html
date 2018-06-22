@@ -1,0 +1,184 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="__CSS__//lists.css">
+
+<div class="container">
+<div class="inner clearfix"> <include file="Public:left"/>
+  <!-- end content-left -->
+
+  <div class="content-right fl">
+    <h1 class="content-right-title">产品列表</h1>
+    <a href="{:U('/Admin/Groupmall/goodsAddEdit')}" class="btn btn-success">发布产品</a>
+    <form action="{:U('/Admin/Groupmall/Goods/issale')}/{$issale}" method="post">
+      <div class="tables-searchbox newcearchbox">
+        <input type="text" placeholder="产品名称" class="input" name="title" value="{$title}" >
+        <button class="btn btn-primary" style="line-height:26px;"> <i class="gicon-search white"></i>查询 </button>
+        <!--<a href="/Item/item_export" class="btn btn-warning"><i class="gicon-share white"></i>-->
+        <!--产品导出</a>-->
+      </div>
+      <div class="tabs clearfix mgt10">
+        <!--a href="{:U('/Admin/Groupmall/Goods')}" class="<eq name="_GET['is_sale']" value="">active</eq> tabs_a fl">全部({$count})</a-->
+        <a href="{:U('/Admin/Groupmall/Goods/issale/1')}" class='<eq name="issale" value="1">active</eq> tabs_a fl'>上架({$count1})</a>
+        <a href="{:U('/Admin/Groupmall/Goods/issale/0')}" class='<eq name="issale" value="0">active</eq> tabs_a fl'>下架({$count2})</a>
+      </div>
+    </form>
+    <!-- end tabs -->
+
+    <table class="wxtables mgt10" style="text-align:center;">
+      <colgroup>
+      <col width="2%">
+      <col width="5%">
+      <col width="10%">
+      <col width="10%">
+      <col width="5%">
+      <col width="5%">
+      <col width="5%">
+      <col width="5%">
+      <col width="15%">
+      </colgroup>
+      <thead>
+        <tr class="po_list">
+          <td><i class="icon_check"></i></td>
+          <td>ID</td>
+          <td>产品名称</td>
+          <td>产品LOGO</td>
+          <td>价格(元)</td>
+          <td>库存(件)</td>
+          <td>排序</td>
+          <td>上架</td>
+          <td>操作</td>
+        </tr>
+      </thead>
+      <tbody>
+        <foreach name="lists" item="vo">
+          <tr>
+            <td><input type="checkbox" class="checkbox table-ckbs" data-id="{$vo['id']}"></td>
+            <td>{$vo.id}</td>
+            <td>{$vo.title}</td>
+            <td><div class="table-item-img"> <img src="{$vo['logo']}" alt=""> </div></td>
+            <td>{$vo.price} </td>
+            <td>{$vo.stock}</td>
+            <td>{$vo.sorts} </td>
+            <td><if condition="($vo.issale eq 1)">是<else/>否</if></td>
+            <td>
+              <a href="{:U('/Admin/Groupmall/goodsAddEdit/id')}/{$vo.id}" class="btn btn-primary j-editClass">编辑</a>
+              <a href="{:U('/Admin/Groupmall/goodsAttribute/id')}/{$vo.id}" class="btn btn-primary j-editClass">属性</a>
+              <a href="##" style="margin-left:5px;" class="btn change-issale <eq name="vo['issale']" value="0">btn-success<else />btn-danger</eq>" data-id="{$vo.id}"  title="上架"><eq name="vo['issale']" value="0">上架<else />下架</eq></a>
+              <a href="javascript:;" class="btn j-delClass btn-warning" title="删除" data-id="{$vo.id}" style="margin-left:5px;">删除</a>
+              <a href="{:U('/Admin/Groupmall/setSKU/id')}/{$vo.id}" class="btn btn-success j-editClass" title="修改">sku&nbsp</a>
+              </td>
+          </tr>
+        </foreach>
+      </tbody>
+    </table>
+    <!-- end wxtables -->
+    <div class="tables-btmctrl clearfix">
+      <div class="fl">
+        <a href="javascript:;" class="btn btn-primary btn_table_selectAll">全选</a>
+        <a href="javascript:;" class="btn btn-primary btn_table_Cancle">取消</a>
+        <a href="javascript:;" class="btn btn-primary btn_table_delAll">删除</a>
+        </div>
+      <!-- end tables-btmctrl -->
+    </div>
+    <div class="tables-btmctrl clearfix" style="padding-top:0px;">
+       <div class="pages"> {$page} </div>
+    </div>
+    <!-- end content-right -->
+  </div>
+</div>
+<!-- end container -->
+<include file="Public:foot"/>
+<script>
+$(".change-status").click(function (){
+  var _this= $(this)
+  var id   = $(this).attr("data-id");
+  var item = $(this).attr("data-item");
+  $.post("{:U('Admin/Groupmall/changeStatus')}", {id:id,item:item}, function(data){
+    if(data.status == 1){
+      _this.css({color:"#0C0"}).html("√");
+    }else if(data.status == 2){
+      _this.css({color:"#c00"}).html("×");
+    }else{
+      alert(data.info);
+    }
+  }, "json")
+})
+$(".change-all-status").click(function (){
+  if(!confirm("确定改变所有选中产品的状态？")){
+    return false;
+  }
+  var ids = "";
+  var item = $(this).attr("data-item");
+  $(".table-ckbs:checked").each(function(i){
+    ids += $(this).attr("data-id")+"-"
+  })
+  if(!ids){
+    alert("请选择产品！");return false;
+  }
+  $.post("{:U('Admin/Groupmall/changeAllStatus')}" ,{ids:ids,item:item}, function (data){
+    if(data.status){
+      window.location.reload();
+    }else{
+      alert(data.info);
+    }
+  })
+})
+$(".btn_table_delAll").click(function(){
+  if(!confirm("确定删除所有选中的产品？")){
+    return false;
+  }
+  var ids = "";
+  $(".table-ckbs:checked").each(function(i){
+    ids += $(this).attr("data-id")+"-"
+  })
+  if(!ids){
+    alert("请选择产品！");return false;
+  }
+  $.post("{:U('Admin/Groupmall/delGroupmall')}" ,{ids:ids}, function (data){
+    alert(data.info);
+    if(data.status){
+      window.location.reload();
+    }
+  })
+})
+</script>
+<script>
+//201709131453  Cyonger
+//上下架S
+$(".change-issale").click(function (){
+  var id   = $(this).attr("data-id");
+  $.post("{:U('Admin/Pointsmall/goodsAddEditDelStatus')}", {action:'changeIssale',id:id}, function(data){
+    if(data.status){
+      window.location.reload()
+    }else{
+      alert(data.info);
+    }
+  }, "json")
+})
+//上下架E
+//删除S
+$(".j-delClass").click(function(){   //是否开始结束
+    var id = $(this).attr("data-id");
+    if(id > 0){
+        if(confirm('确定要删除吗？')){
+            $.ajax({
+                url: "{:U('Admin/Pointsmall/goodsAddEditDelStatus')}",
+                type: "post",
+                dataType: "json",
+                data: {
+                    action:'Del',
+                    id: id,
+                }
+            }).done(function (res) {
+                if (res.status == 1) {
+                    dialog.showTips(res.info,"",1); return false;
+                } else {
+                    dialog.showTips(res.info,"warn"); return false;
+                }
+            })
+        }
+    }else{
+        dialog.showTips('错误的请求','warn');return false;
+    }
+});
+//删除E
+</script>

@@ -1,0 +1,307 @@
+[ 2017-09-15T10:55:32+08:00 ] 183.159.98.104 /Api/index/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000374s ]
+
+[ 2017-09-15T11:29:22+08:00 ] 183.159.98.104 /Api/index/indexBanner
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000329s ]
+ERR: syntax error, unexpected ''API_IMAGE_URL'' (T_CONSTANT_ENCAPSED_STRING), expecting ')'
+
+[ 2017-09-15T11:29:54+08:00 ] 183.159.98.104 /Api/index/indexBanner
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000344s ]
+ERR: syntax error, unexpected ''API_IMAGE_URL'' (T_CONSTANT_ENCAPSED_STRING), expecting ')'
+
+[ 2017-09-15T11:30:10+08:00 ] 183.159.98.104 /Api/index/indexBanner
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000325s ]
+ERR: syntax error, unexpected ''API_IMAGE_URL'' (T_CONSTANT_ENCAPSED_STRING), expecting ')'
+
+[ 2017-09-15T11:30:20+08:00 ] 183.159.98.104 /Api/index/indexBanner
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000323s ]
+
+[ 2017-09-15T11:31:51+08:00 ] 183.159.98.104 /Api/index/indexBanner
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000341s ]
+ERR: Too few arguments to function returnJson(), 1 passed in E:\ersanli\Application\Api\Controller\IndexController.class.php on line 17 and exactly 2 expected
+
+[ 2017-09-15T11:32:52+08:00 ] 183.159.98.104 /Api/index/indexBanner
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000349s ]
+
+[ 2017-09-15T13:44:02+08:00 ] 183.159.98.104 /Api/index/indexBanner
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000322s ]
+
+[ 2017-09-15T13:55:47+08:00 ] 183.159.98.104 /Api/index/indexBanner
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000342s ]
+ERR: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'url' in 'field list'
+
+[ 2017-09-15T13:56:25+08:00 ] 183.159.98.104 /Api/index/indexBanner
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000428s ]
+
+[ 2017-09-15T14:13:50+08:00 ] 183.159.98.104 /Api/index/indexBanner
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000357s ]
+
+[ 2017-09-15T14:42:24+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000324s ]
+
+[ 2017-09-15T14:42:59+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000015s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000521s ]
+
+[ 2017-09-15T14:43:12+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000300s ]
+
+[ 2017-09-15T14:46:23+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000019s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000423s ]
+
+[ 2017-09-15T14:46:34+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000329s ]
+
+[ 2017-09-15T14:46:36+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000022s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000334s ]
+
+[ 2017-09-15T14:46:39+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000289s ]
+
+[ 2017-09-15T15:04:39+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000346s ]
+ERR: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'subtitle' in 'field list'
+
+[ 2017-09-15T15:05:25+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000577s ]
+ERR: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'subtitle' in 'field list'
+
+[ 2017-09-15T15:06:11+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000329s ]
+
+[ 2017-09-15T15:07:53+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000382s ]
+
+[ 2017-09-15T15:08:21+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000335s ]
+
+[ 2017-09-15T15:09:02+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000346s ]
+
+[ 2017-09-15T15:09:08+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000292s ]
+
+[ 2017-09-15T15:09:16+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000292s ]
+
+[ 2017-09-15T15:10:01+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000304s ]
+
+[ 2017-09-15T15:10:12+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000351s ]
+
+[ 2017-09-15T15:10:23+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000390s ]
+
+[ 2017-09-15T15:12:10+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000297s ]
+
+[ 2017-09-15T15:29:19+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000374s ]
+
+[ 2017-09-15T15:37:16+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000333s ]
+
+[ 2017-09-15T15:37:17+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000355s ]
+
+[ 2017-09-15T15:37:17+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000018s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000419s ]
+
+[ 2017-09-15T15:37:17+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000290s ]
+
+[ 2017-09-15T15:37:41+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000287s ]
+
+[ 2017-09-15T15:41:00+08:00 ] 183.159.98.104 /Api/index/indexHotGroupGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000369s ]
+
+[ 2017-09-15T15:41:44+08:00 ] 183.159.98.104 /Api/index/indexHotGroupGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000389s ]
+
+[ 2017-09-15T15:44:38+08:00 ] 183.159.98.104 /Api/index/indexHotGroupGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000345s ]
+
+[ 2017-09-15T15:44:44+08:00 ] 183.159.98.104 /Api/index/indexHotGroupGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000335s ]
+
+[ 2017-09-15T15:47:30+08:00 ] 183.159.98.104 /Api/index/indexHotGroupGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000323s ]
+
+[ 2017-09-15T15:48:08+08:00 ] 183.159.98.104 /Api/index/indexHotGroupGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000021s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000480s ]
+
+[ 2017-09-15T15:48:30+08:00 ] 183.159.98.104 /Api/index/indexHotGroupGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000286s ]
+
+[ 2017-09-15T15:53:33+08:00 ] 183.159.98.104 /Api/index/indexHotGroupGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000361s ]
+
+[ 2017-09-15T15:54:29+08:00 ] 183.159.98.104 /Api/index/indexHotGroupGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000288s ]
+
+[ 2017-09-15T20:10:45+08:00 ] 183.159.98.104 /Api/index/indexHotGoods
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000018s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000513s ]
+ERR: syntax error, unexpected '$field' (T_VARIABLE)
+
+[ 2017-09-15T20:12:02+08:00 ] 183.159.98.104 /Api/index/classify
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000333s ]
+ERR: syntax error, unexpected '$field' (T_VARIABLE)
+
+[ 2017-09-15T20:13:27+08:00 ] 183.159.98.104 /Api/index/classify
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000378s ]
+ERR: syntax error, unexpected '$field' (T_VARIABLE)
+
+[ 2017-09-15T20:14:43+08:00 ] 183.159.98.104 /Api/index/classify
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000339s ]
+ERR: syntax error, unexpected '$field' (T_VARIABLE)
+
+[ 2017-09-15T20:15:06+08:00 ] 183.159.98.104 /Api/index/classify
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000353s ]
+ERR: syntax error, unexpected '$field' (T_VARIABLE)
+
+[ 2017-09-15T20:15:34+08:00 ] 183.159.98.104 /Api/index/classify
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000286s ]
+
+[ 2017-09-15T20:32:55+08:00 ] 183.159.98.104 /Api/Pointsmall/indexBanner
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000439s ]
+
+[ 2017-09-15T20:33:05+08:00 ] 183.159.98.104 /Api/Pointsmall/indexBanner
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000361s ]
+
+[ 2017-09-15T20:33:32+08:00 ] 183.159.98.104 /Api/Pointsmall/indexBanner
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000022s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000506s ]
+
+[ 2017-09-15T21:03:31+08:00 ] 183.159.98.104 /Api/Pointsmall/indexNewtj
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000331s ]
+
+[ 2017-09-15T21:03:44+08:00 ] 183.159.98.104 /Api/Pointsmall/indexNewtj
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000299s ]
+
+[ 2017-09-15T21:10:51+08:00 ] 183.159.98.104 /Api/Pointsmall/indexNewtj
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000341s ]
+
+[ 2017-09-15T21:10:54+08:00 ] 183.159.98.104 /Api/Pointsmall/indexNewtj
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000334s ]
+
+[ 2017-09-15T21:10:55+08:00 ] 183.159.98.104 /Api/Pointsmall/indexNewtj
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000319s ]
+

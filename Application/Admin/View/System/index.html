@@ -1,0 +1,123 @@
+<include file="Public:head"/>
+<!-- <script type="text/javascript" src="__JS__/jquery.js"></script> -->
+<style>
+	.imgnav{
+		max-height: 30px;
+		overflow: hidden;
+		cursor: pointer;
+	}
+	.imgwrapper{
+		display: block;
+		width: 78px;
+		height: 78px;
+		overflow: hidden;
+	}
+	.imgwrapper img{
+		display: block;
+		width: 100%;
+		padding: 0;
+		margin: 0;
+		border:0;
+	}
+	.spanpd10{
+		margin:10px;
+	}
+	.wxtables.wxtables-sku.newtable{
+		width: 40%;
+		margin: 0;
+	}
+	.img-list li{
+		width: 60px;
+		height:60px;
+	}
+	.cst_h3 span{font-weight: normal;}
+	#imgdiv img{ max-width:190px; max-height:190px; display:none; margin:5px;}
+	.btnimage{width:80px; height:30px; background:white; border:1px solid #d9d9d9;cursor:pointer; position:relative; text-align:center; line-height:31px;}
+	.file{ position:absolute; top:0px; left:0; width:80px; height:30px; background:white; border:1px solid #d9d9d9;cursor:pointer; opacity:0}
+	#imgdiv2 img{ max-width:88px; max-height:88px; display:none; margin:5px;}
+	#xuanze2{ width:60px; height:30px; background:white; border:1px solid #d9d9d9; }
+	#xuanze2:hover{ background:#E6E6E6; }
+	.huase{display:none; width:86px; height:30px; margin:5px; text-indent:5px;}
+
+	</style>
+<div class="container">
+  <div class="inner clearfix"> <include file="Public:systemleft" />
+    <!-- end content-left -->
+    
+    <div class="content-right fl">
+      <h1 class="content-right-title">接口秘钥设置</h1>
+      <form aciton="{:U('/Admin/company/addCompany')}" enctype="multipart/form-data" method="post" id="edit" onsubmit="">
+        <div class="panel-single panel-single-light mgt20">
+          <h3 class="cst_h3 mgb20">基本信息</h3>
+          <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>融云appKey：</label>
+            <div class="form-controls"> 
+              <input type="text" class="input required db_edit" value="{$cache.rongyun_appkey}" style="width:300px;" title="融云appKey" name="rongyun_appKey" readonly>
+              <span>双击后进行修改</span>
+          </div>
+          <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>融云appSecret：</label>
+            <div class="form-controls"> 
+              <input type="text" class="input required db_edit" value="{$cache.rongyun_appsecret}" style="width:300px;" title="融云appSecret" name="rongyun_appSecret" readonly>
+          </div>
+          <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>JPush_appKey：</label>
+            <div class="form-controls"> 
+              <input type="text" class="input required db_edit" value="{$cache.jpush_appkey}" style="width:300px;" title="JPush_appKey" name="jpush_appKey" readonly>
+          </div>
+          <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>JPush_appSecret：</label>
+            <div class="form-controls">
+              <input type="text" class="input db_edit" value="{$cache.jpush_appsecret}" style="width:300px;" title="JPush_appSecret" name="jpush_appSecret" readonly>
+            </div>
+          </div>
+          <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>最后操作管理员：</label>
+            <div class="form-controls">
+              <input type="text" class="input" value="{$cache.lastadmin}" title="JPush_appSecret" disabled>
+            </div>
+          </div>
+          <div class="formitems">
+            <label class="fi-name"><span class="colorRed">*</span>最后操作时间：</label>
+            <div class="form-controls">
+              <input type="text" class="input" value="{$cache.lasttime}" title="JPush_appSecret" disabled >
+            </div>
+          </div>
+        
+        <!-- end 详情及其它 -->
+        
+        <div class="panel-single panel-single-light mgt20 txtCenter"> <a href="" class="btn" onclick="history.back()">返回</a>
+        <a id="sub" class="btn btn-primary">保存</a>
+        </div>
+      </form>
+    </div>
+    <!-- end content-right --> 
+  </div>
+</div>
+<!-- end container --> 
+
+<include file="Public:foot"/>
+<!--提交表单前验证--> 
+<!--提交表单前验证end--> 
+
+<!--上传图片--> 
+
+<script type="text/javascript">
+(function(){
+  $("#sub").click(function(){
+    var data = $("#edit").serialize();
+    $.post("{:U('/Admin/system/editApp')}",data,function(res){
+      if(res.status == 1){
+        dialog.showTips(res.info,"",1); return false;
+      }else{
+        alert(res.info)
+      }
+    },"json")
+  })
+  $(".db_edit").dblclick(function (){
+    $(this).removeAttr("readonly").focus().blur(function(){$(this).attr("readonly",true)})
+  })
+})()
+</script> 
+
+

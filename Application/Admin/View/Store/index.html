@@ -1,0 +1,341 @@
+<include file="Public:head"/>
+<!-- end header -->
+<style>
+.wxtables td .btn {padding: 0px 6px;}
+#J_wx_fans {vertical-align: -2px;margin-top: 5px;}
+.select.mini.new {width: 140px;}
+input.mini.Wdate {width: 100px;}
+</style>
+<script type="text/javascript" src="__JS__/jquery.js"></script>
+<div class="container">
+    <div class="inner clearfix">
+        <include file="Public:left" />
+        <!-- end content-left -->
+        <div class="content-right fl">
+            <h1 class="content-right-title">商户列表</h1>
+            <div class="alert alert-info disable-del">目前拥有<span style="font-size:16px;">&nbsp;{$count}&nbsp;</span>名商户。
+                <a href="javascript:;" class="alert-delete" title="隐藏"><i class="gicon-remove"></i></a>
+            </div>
+            <!--<a href="/User/user_export" class="btn btn-warning">会员导出</a>-->
+            <!--a href="/Admin/Store/storeAdd" class="btn btn-success">商家添加</a-->
+            <a href="/Admin/Store/storeImport" class="btn btn-success">商家导入</a>
+            <div class="tablesWrap">
+                    <div class="tables-searchbox">
+                        <div class="fl">
+                            <form action="{:U('/Admin/Store/index',array('type'=>$type))}">
+                                <input type="text" class="input large" name="title" id="title" value="{$title}" placeholder="店名|负责人|推荐人|联系方式">
+                                <!--select class="select small" name="branchid">
+                                    <option value="">--请选择部门--</option>
+                                    <volist name="branchlists" id="vo">
+                                        <option value="{$vo.id}" <if condition="$branchid eq $vo['id']">selected</if>>{$vo.classtitle}</option>
+                                    </volist>
+                                </select>
+                                <select class="select small" name="gid">
+                                    <option value="">--请选择职位--</option>
+                                    <volist name="joblists" id="vo">
+                                        <option value="{$vo.id}" <if condition="$gid eq $vo['id']">selected</if>>{$vo.classtitle}</option>
+                                    </volist>
+                                </select-->
+                                <button class="btn btn-primary" id="search_m" style="vertical-align:-2px;">
+                                    <i class="gicon-search white"></i>查询
+                                </button>
+                            </form>
+                        </div>
+                        <!--div class="fl" style="margin-left:10px;"><a href="javascript:;" class="btn btn-success fl BtnAddClass">添加用户</a></div-->
+                    </div>
+                    <div class='clear'></div>
+              <div class="tabs clearfix mgt10">
+                <a href="{:U('/Admin/Store/Index')}" class="<eq name="_GET['type']" value="">active</eq> tabs_a fl">全部({$count1})</a>
+                <a href="{:U('/Admin/Store/Index/type/1')}" class="<eq name="_GET['type']" value="1">active</eq> tabs_a fl">未审核({$count2})</a>
+                <a href="{:U('/Admin/Store/Index/type/2')}" class="<eq name="_GET['type']" value="2">active</eq> tabs_a fl">已禁用({$count3})</a>
+              </div>
+                <!-- end tables-searchbox -->
+                <table class="wxtables" style="text-align:center;">
+                    <colgroup>
+                        <col width="2%">
+                        <col width="10%">
+                        <col width="12%">
+                        <col width="12%">
+                        <col width="12%">
+                        <col width="9%">
+                        <col width="14%">
+                        <col width="9%">
+                        <col width="9%">
+                        <col width="15%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <td><i class="icon_check"></i></td>
+                        <td>商店logo</td>
+                        <td>店名<br/>店铺状态</td>
+                        <td>负责人<br/>联系方式<br/>注册码</td>
+                        <td>推荐人<br/>联系方式<br/>注册码</td>
+                        <td>余额</td>
+                        <td>申请时间</td>
+                        <td>账号状态</td>
+                        <td>审核状态</td>
+                        <td>操作</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <foreach name="lists" item="vo">
+                    <tr>
+                        <td><input type="checkbox" class="checkbox table-ckbs" data-id="{$vo['id']}"></td>
+                        <td><img src="{$IMG_URL}{$vo.storelogo}" width="80"></td>
+                        <td>{$vo.storename}<br/>
+                            <switch name="vo.is_open">
+                                <case value="0"><p>正常</p></case>
+                                <case value="1"><p style='color:red;'>关店</p></case>
+                            </switch>
+                        </td>
+                        <td>{$vo.name}<br/>{$vo.telephone}<br/>{$vo.regcode}</td>
+                        <td>
+                            <notempty name="vo['stelephone']">{$vo.sname}<br/>{$vo.stelephone}</notempty>
+                            <notempty name="vo['dtelephone']">{$vo.dname}<br/>{$vo.dtelephone}</notempty>
+                            {$vo.invitecode}
+                        </td>
+                        <td>{$vo.wallet|default='0.00'}</td>
+                        <td>{$vo.create_at|date="Y-m-d H:i:s",###}</td>
+                        <td class="status">
+                            <switch name="vo.status">
+                                <case value="0"><p>正常</p></case>
+                                <case value="1"><p style='color:red;'>冻结</p></case>
+                            </switch>
+                        </td>
+                        <td>
+                            <switch name="vo.check_status">
+                                <case value="0"><p>待审核</p></case>
+                                <case value="1"><p>通过</p></case>
+                                <case value="2"><p>不通过</p></case>
+                            </switch>
+                        </td>
+                        <td>
+                            <p>
+                                <a href="{:U('/Admin/Store/detail/id')}/{$vo.id}" class="btn btn-success">详情|编辑</a>
+                                <a href="{:U('/Admin/order/index/storeid')}/{$vo.id}" class="btn btn-success">订单</a>
+                                <a href="{:U('/Admin/water/storewater/storeid')}/{$vo.id}" class="btn btn-success">流水</a>
+                                <a href="{:U('/Admin/Goods/index/storeid')}/{$vo.id}" class="btn btn-success">商品</a>
+                                <if condition="$vo['check_status'] eq 1">
+                                <switch name="vo.status">
+                                    <case value="0">
+                                        <a href="JavaScript:void(0);" class="btn btn-warning changeStatus" title="冻结" data-id="{$vo.id}">冻结</a>
+                                    </case>
+                                    <case value="1">
+                                        <a href="JavaScript:void(0);" class="btn btn-danger changeStatus" title="解冻" data-id="{$vo.id}">解冻</a>
+                                    </case>
+                                </switch>
+                                </if>
+                            </p>
+                        </td>
+                    </tr>
+                    </foreach>
+                    </tbody>
+                </table>
+                <!-- end wxtables -->
+                <div class="tables-btmctrl clearfix" style="padding: 3px 0;">
+                    <div class="fl">
+                        <a href="javascript:;" class="btn btn-primary btn_table_selectAll">全选</a>
+                        <a href="javascript:;" class="btn btn-primary btn_table_Cancle">取消</a>
+                        <a href="javascript:;" class="btn btn-success " onclick="throughBth()" >未审核通过</a>
+                    </div>
+                </div>
+                <div class="tables-btmctrl clearfix">
+                    <div class="fl">
+                        <div class="pages" style="width:100%;margin-left:0px;">
+                            {$page}
+                        </div>
+                        <!-- end paginate -->
+                    </div>
+                </div>
+                <!-- end tables-btmctrl -->
+            </div>
+            <!-- end tablesWrap -->
+        </div>
+        <!-- end content-right -->
+    </div>
+</div>
+<div id="albums-overlay" class="disshow"></div>
+<div class="jbox addfenlei disshow" style="width:500px">
+  <div class="jbox-title">
+    <div class="jbox-title-txt">添加用户</div>
+    <a href="javascript:;" class="jbox-close cancle"></a></div>
+  <div class="jbox-container" style="height: 263px;">
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed"></span>部门：</label>
+      <div class="form-controls">
+        <select name="branchid">
+            <option value="">——请选择——</option>
+            <volist name="branchlists" id="vo">
+                <option value="{$vo.id}">{$vo.classtitle}</option>
+            </volist>
+        </select>
+        <span class="fi-help-text examinemsg"></span> </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed"></span>职位：</label>
+      <div class="form-controls">
+        <select name="gid">
+            <option value="">——请选择——</option>
+            <volist name="joblists" id="vo">
+                <option value="{$vo.id}">{$vo.classtitle}</option>
+            </volist>
+        </select>
+        <span class="fi-help-text examinemsg"></span> </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed"></span>真实姓名：</label>
+      <div class="form-controls">
+        <label>
+            <input type="text" name="realname" value="" placeholder=""><span class="red">*必填</span>
+        </label>
+        <span class="fi-help-text"></span>
+      </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed"></span>昵称：</label>
+      <div class="form-controls">
+        <label>
+            <input type="text" name="person_name" value="" placeholder=""><span class="red">*必填</span>
+        </label>
+        <span class="fi-help-text"></span>
+      </div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed"></span>手机号：</label>
+      <div class="form-controls">
+        <label>
+            <input type="tel" name="telephone" value="" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"><span class="red">*必填</span>
+        </label>
+        <span class="fi-help-text">前台登录账号</span></div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed"></span>密码：</label>
+      <div class="form-controls">
+        <label>
+            <input type="password" name="password" placeholder=" (若不填写默认手机号)"><span>*可填</span>
+        </label>
+        <span class="fi-help-text">前台登录账号,默认手机号密码,6~16位</span></div>
+    </div>
+    <div class="formitems">
+      <label class="fi-name"><span class="colorRed"></span>性别：</label>
+      <div class="form-controls">
+        <label>
+            <input type="radio" name="sex" value="1" checked><span>男</span>
+            <input type="radio" name="sex" value="2"><span>女</span>
+        </label>
+        <span class="fi-help-text"></span> </div>
+    </div>
+  </div>
+  <div class="jbox-buttons"><a href="javascript:void(0);" class="jbox-buttons-ok btn btn-primary" id="examine">确定</a><a
+            href="javascript:void (0);" class="jbox-buttons-ok btn cancle">取消</a></div>
+</div>
+<!-- end container -->
+<script>
+$(function(){
+    $(".cancle").click(function(){  //取消层
+        $(this).parent().parent('.jbox').hide();
+        $('#albums-overlay').hide();
+    })
+    $(".BtnAddClass").click(function(){   //弹出消层
+        $('.addfenlei').show();
+        $('#albums-overlay').show();
+    })
+    $("#examine").click(function (){
+        var branchid =$(".addfenlei select[name=branchid]").val();
+        var gid      =$(".addfenlei select[name=gid]").val();
+        var realname =$.trim($(".addfenlei input[name=realname]").val());
+        var person_name =$.trim($(".addfenlei input[name=person_name]").val());
+        var telephone=$.trim($(".addfenlei input[name=telephone]").val())
+        var password =$.trim($(".addfenlei input[name=password]").val());
+        var sex      =$(".addfenlei input[name=sex]:checked").val();
+        if(!branchid)
+        {
+            dialog.showTips('请选择部门','warn');return false;
+        }
+        if(!gid)
+        {
+            dialog.showTips('请选择职位','warn');return false;
+        }
+        if(realname.length<1)
+        {
+            dialog.showTips('真实姓名必填','warn');return false;
+        }else if(realname.length>30){
+            dialog.showTips('真实姓名必须30字内','warn');return false;
+        }
+        if(person_name.length<1)
+        {
+            dialog.showTips('昵称必填','warn');return false;
+        }else if(person_name.length>30){
+            dialog.showTips('昵称必填必须30字内','warn');return false;
+        }
+        if(telephone.length<1)
+        {
+            dialog.showTips('手机号必填','warn');return false;
+        }else if(!(/^1[34578]\d{9}$/.test(telephone))){
+            dialog.showTips('手机号格式错误','warn');return false;
+        }
+        if(password.length<1){
+            password = telephone;
+        }
+        if(!password.match(/^[a-zA-Z0-9]{6,16}$/)){
+            dialog.showTips('密码格式错误','warn');return false;
+        }
+        if(!sex){
+            dialog.showTips('请选择性别','warn');return false;
+        }
+        var data = {branchid:branchid,gid:gid,realname:realname,person_name:person_name,telephone:telephone,password:password,sex:sex}
+        $.post("{:U('Admin/Store/storeAddEditDelStatus')}",data,function(g){
+            if(g.status==1)
+            {
+                window.location.reload()
+            }else{
+                dialog.showTips(g.info,'warn');return false;
+            }
+        },"json");
+    })
+    $(".changeStatus").click(function(){        //是否冻结
+        var id = $(this).attr("data-id");
+        var _this = $(this);
+        $.post("{:U('/Admin/Store/storeAddEditDelStatus')}",{id:id},function(data){
+            if(data.status == 1){
+                var p = _this.parent().parent().parent().find(".status p");
+                p.html(data.txt);
+                if(_this.hasClass("btn-warning")){
+                    _this.removeClass("btn-warning").addClass("btn-danger").html("解冻")
+                    p.css("color","red")
+                }else{
+                    _this.removeClass("btn-danger").addClass("btn-warning").html("冻结")
+                    p.css("color","black")
+                }
+                window.location.reload();   //刷新当前页面.
+            }else{
+                alert("修改失败");
+            }
+        },"json")
+    })
+})
+function throughBth(){
+    if(confirm('确定要审核通过选择的门店吗？')){
+        var id ='';
+        if($('.checkbox:checked').length ==0){
+            alert('请选择要审核的行');return false;
+        }
+        $('.checkbox:checked').each(function(){
+            id = id + $(this).attr("data-id") + '_';
+        });
+        $.ajax({
+            url: "{:U('/Admin/Store/batchThrough')}",
+            type: "post",
+            dataType: "json",
+            data: {id:id}
+        }).done(function (res) {
+            if (res.status == 1) {
+                dialog.showTips(res.info,"",1);
+            } else {
+                dialog.showTips(res.info,"warn");
+            }
+        })
+    }
+}
+</script>
+<include file="Public:foot"/>
